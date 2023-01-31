@@ -7,4 +7,6 @@
     <string name="signup">Sign Up</string>
     <string name="default_name">NickName</string>
     <string name="id">ID</string>
+    <string name="nickname">닉네임</string>
+    <string name="redundancy">중복확인</string>
 </resources>
