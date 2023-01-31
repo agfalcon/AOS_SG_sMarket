@@ -1,8 +1,10 @@
-package com.smilestone.smarket
+package com.smilestone.smarket.Login
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.smilestone.smarket.Retrofit.ConnectService
+import com.smilestone.smarket.SignupActivity
 import com.smilestone.smarket.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -19,9 +21,7 @@ class LoginActivity : AppCompatActivity() {
         }
         
         binding.btnLogin.setOnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
-            finish()
+
         }
     }
 }
