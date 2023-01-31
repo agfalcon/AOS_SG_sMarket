@@ -11,6 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ConnectService {
     var loginData:Login? = null
     //초기 retrofit 빌드
+    //TODO("SERVER BASEURL 입력")
     val retrofit = Retrofit.Builder().baseUrl("")
             .addConverterFactory(GsonConverterFactory.create())
             .build()

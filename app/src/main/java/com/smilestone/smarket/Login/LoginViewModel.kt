@@ -8,13 +8,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.smilestone.smarket.Retrofit.ConnectService
 import com.smilestone.smarket.Retrofit.Login
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
     companion object{
+        //TODO("LOGIN_SERVER_URL 및 양식")
         const val LOGIN_SERVER_URL = ""
     }
 
@@ -26,7 +25,35 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     val pw : LiveData<String>
         get() = _pw
 
-    fun login(){
-        val code: Int? = ConnectService.login(_id.value.toString(), _pw.value.toString())
+    fun login(): Int{
+        val code: Int? = ConnectService.login(_id.value.toString(), _pw.value.toString()) ?: -1
+        val result = when(code){
+            -1, 1001 -> {
+                Toast.makeText(getApplication(), "로그인 오류", Toast.LENGTH_SHORT).show()
+                -1
+            }
+            1000 ->{
+                if(ConnectService.loginData?.code=="1000"){
+                    1
+                } else {
+                    Toast.makeText(getApplication(), "잘못된 로그인 정보입니다.", Toast.LENGTH_SHORT).show()
+                    -1
+                }
+            }
+            else -> {
+                Toast.makeText(getApplication(), "로그인 오류", Toast.LENGTH_SHORT).show()
+                -1
+            }
+        }
+        return result
+    }
+
+    fun getID(id:String){
+        _id.value = id
+        Log.d("idcheck", _id.value.toString())
+    }
+
+    fun getPW(pw: String){
+        _pw.value = pw
     }
 }
