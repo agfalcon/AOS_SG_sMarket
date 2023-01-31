@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">SMARKET</string>
+    <string name="app_name">sMarket</string>
+    <string name="sign_up">회원가입</string>
+    <string name="sMarket">sMarket</string>
+    <string name="Login">Login</string>
+    <string name="Or">또는</string>
+    <string name="signup">Sign Up</string>
+    <string name="default_name">NickName</string>
+    <string name="id">ID</string>
 </resources>

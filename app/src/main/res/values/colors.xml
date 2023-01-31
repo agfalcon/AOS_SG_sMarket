@@ -11,4 +11,6 @@
     <color name="main_color">#FFA45B</color>
     <!-- 옅은 선 표시(옅은 회색)-->
     <color name="light_gray">#979797</color>
+    <!-- 짙은 회색-->
+    <color name="dark_gray">#595959</color>
 </resources>
