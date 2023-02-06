@@ -3,11 +3,11 @@ package com.smilestone.smarket.Login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
 import com.smilestone.smarket.HomeActivity
-import com.smilestone.smarket.Retrofit.ConnectService
-import com.smilestone.smarket.SignupActivity
+import com.smilestone.smarket.SignUp.SignupActivity
 import com.smilestone.smarket.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -31,12 +31,12 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.editId.doAfterTextChanged {
-            model.getID(it.toString())
+            model.loginData.value?.id = binding.editId.text.toString()
             //TODO("아이디 양식 체크")
         }
 
         binding.editPw.doAfterTextChanged {
-            model.getPW(it.toString())
+            model.loginData.value?.pw = binding.editPw.text.toString()
             //TODO("비밀번호 양식 체크")
         }
     }

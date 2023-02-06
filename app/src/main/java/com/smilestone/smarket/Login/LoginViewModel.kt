@@ -13,22 +13,24 @@ import com.smilestone.smarket.Retrofit.Login
 
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
+    data class inputData(var id: String, var pw: String)
 
-    companion object{
-        //TODO("LOGIN_SERVER_URL 및 양식")
-        const val LOGIN_SERVER_URL = ""
+    private val data = inputData("","")
+    private val _loginData = MutableLiveData<inputData>()
+
+    val loginData : LiveData<inputData>
+        get() = _loginData
+
+
+    init{
+       _loginData.value = data
     }
 
-    private val _id = MutableLiveData<String>()
-    private val _pw = MutableLiveData<String>()
-
-    val id : LiveData<String>
-        get() = _id
-    val pw : LiveData<String>
-        get() = _pw
-
     fun login(): Int{
-        val code: Int? = ConnectService.login(_id.value.toString(), _pw.value.toString()) ?: -1
+        if(!checkLogin()){
+            return -1
+        }
+        val code: Int? = ConnectService.login(_loginData.value?.id.toString(), _loginData.value?.pw.toString()) ?: -1
         val result = when(code){
             -1, CODE_FAIL -> {
                 Toast.makeText(getApplication(), "로그인 오류", Toast.LENGTH_SHORT).show()
@@ -50,12 +52,11 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         return result
     }
 
-    fun getID(id:String){
-        _id.value = id
-        Log.d("idcheck", _id.value.toString())
-    }
-
-    fun getPW(pw: String){
-        _pw.value = pw
+    private fun checkLogin(): Boolean{
+        if(_loginData.value?.id?.isEmpty() == true || _loginData.value?.pw?.isEmpty() == true){
+            Toast.makeText(getApplication(), "아이디와 패스워드를 모두 채워주세요", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
     }
 }
