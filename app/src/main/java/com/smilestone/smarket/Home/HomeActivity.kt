@@ -1,4 +1,4 @@
-package com.smilestone.smarket
+package com.smilestone.smarket.Home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

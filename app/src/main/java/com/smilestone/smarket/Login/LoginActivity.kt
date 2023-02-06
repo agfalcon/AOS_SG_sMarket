@@ -3,10 +3,9 @@ package com.smilestone.smarket.Login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
-import com.smilestone.smarket.HomeActivity
+import com.smilestone.smarket.Home.HomeActivity
 import com.smilestone.smarket.SignUp.SignupActivity
 import com.smilestone.smarket.databinding.ActivityLoginBinding
 
