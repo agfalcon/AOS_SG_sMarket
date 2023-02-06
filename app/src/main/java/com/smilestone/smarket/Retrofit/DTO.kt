@@ -9,3 +9,11 @@ data class Login(
     @SerializedName("message")
     val message: String
 )
+
+data class SignUp(
+    @SerializedName("code")
+    val code: String,
+
+    @SerializedName("message")
+    val message: String
+)

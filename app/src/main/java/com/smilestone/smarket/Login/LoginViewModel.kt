@@ -6,6 +6,8 @@ import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.smilestone.smarket.CODE_FAIL
+import com.smilestone.smarket.CODE_OK
 import com.smilestone.smarket.Retrofit.ConnectService
 import com.smilestone.smarket.Retrofit.Login
 
@@ -28,11 +30,11 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
     fun login(): Int{
         val code: Int? = ConnectService.login(_id.value.toString(), _pw.value.toString()) ?: -1
         val result = when(code){
-            -1, 1001 -> {
+            -1, CODE_FAIL -> {
                 Toast.makeText(getApplication(), "로그인 오류", Toast.LENGTH_SHORT).show()
                 -1
             }
-            1000 ->{
+            CODE_OK ->{
                 if(ConnectService.loginData?.code=="1000"){
                     1
                 } else {
