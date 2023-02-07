@@ -26,7 +26,9 @@ class LoginActivity : AppCompatActivity() {
         }
         
         binding.btnLogin.setOnClickListener {
-            loginAccess()
+            //loginAccess()
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
         }
 
         binding.editId.doAfterTextChanged {

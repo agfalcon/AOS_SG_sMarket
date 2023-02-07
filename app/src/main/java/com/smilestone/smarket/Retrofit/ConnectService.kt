@@ -3,7 +3,6 @@ package com.smilestone.smarket.Retrofit
 import android.util.Log
 import android.widget.Toast
 import com.smilestone.smarket.CODE_FAIL
-import com.smilestone.smarket.CODE_OK
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,7 +27,7 @@ object ConnectService {
             .enqueue(object: Callback<Login> {
                 override fun onResponse(call: Call<Login>, response: Response<Login>) {
                     loginData = response.body()
-                    code = CODE_OK
+                    code = response.code()
                 }
 
                 override fun onFailure(call: Call<Login>, t: Throwable) {
@@ -43,11 +42,11 @@ object ConnectService {
     val signUpService: SignUpService = retrofit.create(SignUpService::class.java)
     fun signUp(id: String, pw: String, email:String, nickname: String): Int? {
         var code: Int? = null
-        signUpService.requestSignUp(id, pw, email, nickname)
+        signUpService.requestSignUp(id, pw, nickname)
             .enqueue(object: Callback<SignUp>{
                 override fun onResponse(call: Call<SignUp>, response: Response<SignUp>) {
                     signUpData = response.body()
-                    code = CODE_OK
+                    code = response.code()
                 }
 
                 override fun onFailure(call: Call<SignUp>, t: Throwable) {
@@ -57,6 +56,22 @@ object ConnectService {
 
             })
         return code
+    }
+
+    //홈 화면 서비스
+    val homeService: SearchService = retrofit.create(SearchService::class.java)
+    fun home(){
+        homeService.SearchAll()
+            .enqueue(object: Callback<Post>{
+                override fun onResponse(call: Call<Post>, response: Response<Post>) {
+
+                }
+
+                override fun onFailure(call: Call<Post>, t: Throwable) {
+                    Log.e("Home", t.message.toString())
+                }
+
+            })
     }
 
 }

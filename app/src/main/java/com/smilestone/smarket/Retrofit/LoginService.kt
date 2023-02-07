@@ -6,9 +6,9 @@ import retrofit2.http.POST
 
 interface LoginService {
 
-    @POST("login")
+    @POST("/api/signin")
     fun requestLogin(
-        @Field("id") id:String,
-        @Field("pw") pw:String
+        @Field("userId") id:String,
+        @Field("password") pw:String
     ): Call<Login>
 }

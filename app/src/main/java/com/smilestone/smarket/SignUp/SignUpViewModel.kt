@@ -7,7 +7,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.smilestone.smarket.CODE_FAIL
-import com.smilestone.smarket.CODE_OK
+import com.smilestone.smarket.REQUSET_ERROR
+import com.smilestone.smarket.REQUSET_OK
 import com.smilestone.smarket.Retrofit.ConnectService
 import com.smilestone.smarket.Retrofit.SignUp
 
@@ -30,16 +31,13 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
         _signUpData.value?.email.toString(), _signUpData.value?.nickname.toString())
         val result = when(code){
             -1, CODE_FAIL -> {
-                Toast.makeText(getApplication(), "회원가입 오류", Toast.LENGTH_SHORT).show()
+                Toast.makeText(getApplication(), "서버 오류", Toast.LENGTH_SHORT).show()
                 -1
             }
-            CODE_OK ->{
-                if(ConnectService.loginData?.code=="1000"){
-                    1
-                } else {
-                    Toast.makeText(getApplication(), "잘못된 회원가입 정보입니다.", Toast.LENGTH_SHORT).show()
-                    -1
-                }
+            REQUSET_OK ->1
+            REQUSET_ERROR->{
+                Toast.makeText(getApplication(), ConnectService.signUpData?.message.toString(), Toast.LENGTH_SHORT).show()
+                -1
             }
             else -> {
                 Toast.makeText(getApplication(), "회원가입 오류", Toast.LENGTH_SHORT).show()

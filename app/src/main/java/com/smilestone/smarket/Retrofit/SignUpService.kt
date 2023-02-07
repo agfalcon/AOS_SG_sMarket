@@ -6,11 +6,10 @@ import retrofit2.http.POST
 
 interface SignUpService {
 
-    @POST("SignUp")
+    @POST("/api/signup")
     fun requestSignUp(
-        @Field("id") id:String,
-        @Field("pw") pw:String,
-        @Field("email") email:String,
-        @Field("nickname") nickname:String,
+        @Field("userId") id:String,
+        @Field("password") pw:String,
+        @Field("nickName") nickname:String,
     ) : Call<SignUp>
 }
