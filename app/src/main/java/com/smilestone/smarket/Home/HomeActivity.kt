@@ -3,6 +3,7 @@ package com.smilestone.smarket.Home
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import androidx.lifecycle.ViewModelProvider
@@ -47,12 +48,14 @@ class HomeActivity : AppCompatActivity(), OnClickListener {
     }
 
     override fun onClick(v: View?) {
+        Log.d("intent", v.toString())
         val intent = when(v?.id){
-            binding.btnSearch.id -> Intent(this, SearchActivity::class.java)
-            binding.btnChat.id -> Intent(this, ChatActivity::class.java)
-            binding.btnEdit.id -> Intent(this, EditActivity::class.java)
+            binding.btnSearch.id -> Intent(applicationContext, SearchActivity::class.java)
+            binding.btnChat.id -> Intent(applicationContext, ChatActivity::class.java)
+            binding.btnEdit.id -> Intent(applicationContext, EditActivity::class.java)
             else -> return
         }
+        Log.d("intent", intent.toString())
         startActivity(intent)
     }
 }

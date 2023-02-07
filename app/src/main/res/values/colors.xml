@@ -15,4 +15,6 @@
     <color name="dark_gray">#595959</color>
     <!-- border color-->
     <color name="border">#D9D9D9</color>
+    <!-- serch box -->
+    <color name="search_box">#F0F0F0</color>
 </resources>
