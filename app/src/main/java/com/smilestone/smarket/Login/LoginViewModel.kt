@@ -16,7 +16,7 @@ import com.smilestone.smarket.Retrofit.Login
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
     data class inputData(var id: String, var pw: String)
 
-    private val data = inputData("","")
+
     private val _loginData = MutableLiveData<inputData>()
 
     val loginData : LiveData<inputData>
@@ -24,7 +24,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
 
     init{
-       _loginData.value = data
+       _loginData.value = inputData("","")
     }
 
     fun login(): Int{

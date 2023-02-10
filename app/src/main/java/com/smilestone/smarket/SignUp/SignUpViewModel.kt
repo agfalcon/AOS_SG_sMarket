@@ -15,13 +15,12 @@ import com.smilestone.smarket.Retrofit.SignUp
 class SignUpViewModel(application: Application) : AndroidViewModel(application) {
     data class userData(var id: String, var pw: String, var email: String, var nickname: String)
 
-    private val _userData:userData = userData("","","","")
     private val _signUpData = MutableLiveData<userData>()
     val signUpData: LiveData<userData>
         get() = _signUpData
 
     init{
-        _signUpData.value = _userData
+        _signUpData.value = userData("","","","")
     }
 
     fun signUp(): Int{
