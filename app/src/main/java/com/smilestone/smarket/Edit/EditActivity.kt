@@ -11,5 +11,13 @@ class EditActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityEditBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.btnExit.setOnClickListener{
+            finish()
+        }
+
+        binding.btnEdit.setOnClickListener {
+            //TODO("글 작성시 서버에 올리기 해야함")
+        }
     }
 }

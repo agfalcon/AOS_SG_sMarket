@@ -9,4 +9,8 @@
     <string name="id">ID</string>
     <string name="nickname">닉네임</string>
     <string name="redundancy">중복확인</string>
+    <string name="complete">완료</string>
+    <string name="exit">닫기</string>
+    <string name="input_price">가격 입력</string>
+    <stirng name="edit_title">글 제목</stirng>
 </resources>
