@@ -1,14 +1,11 @@
 package com.smilestone.smarket.Login
 
 import android.app.Application
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.smilestone.smarket.CODE_FAIL
-import com.smilestone.smarket.REQUSET_ERROR
-import com.smilestone.smarket.REQUSET_OK
+import com.smilestone.smarket.*
 import com.smilestone.smarket.Retrofit.ConnectService
 import com.smilestone.smarket.Retrofit.Login
 
@@ -37,7 +34,9 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                 Toast.makeText(getApplication(), "서버 오류", Toast.LENGTH_SHORT).show()
                 -1
             }
-            REQUSET_OK ->1
+            REQUSET_OK ->{
+                1
+            }
             REQUSET_ERROR->{
                 Toast.makeText(getApplication(), ConnectService.loginData?.message.toString(), Toast.LENGTH_SHORT).show()
                 -1
@@ -49,6 +48,29 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         }
         return result
     }
+
+    fun jwtLogin(token: String?): Int{
+        val code: Int? = ConnectService.jwtLogin(token)
+        val result = when(code){
+            -1, CODE_FAIL->{
+                Toast.makeText(getApplication(), "서버 오류", Toast.LENGTH_SHORT).show()
+                -1
+            }
+            STATUS_OK->{
+                1
+            }
+            REQUSET_ERROR, NO_AUTHORIZATION->{
+                Toast.makeText(getApplication(), ConnectService.loginData?.message.toString(), Toast.LENGTH_SHORT).show()
+                -1
+            }
+            else -> {
+                Toast.makeText(getApplication(), "로그인 오류", Toast.LENGTH_SHORT).show()
+                -1
+            }
+        }
+        return result
+    }
+
 
     private fun checkLogin(): Boolean{
         if(_loginData.value?.id?.isEmpty() == true || _loginData.value?.pw?.isEmpty() == true){

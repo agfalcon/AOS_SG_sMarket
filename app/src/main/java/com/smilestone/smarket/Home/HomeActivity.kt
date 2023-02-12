@@ -20,6 +20,9 @@ class HomeActivity : AppCompatActivity(), OnClickListener {
     private lateinit var model: HomeViewModel
     private lateinit var homeAdapter: HomeAdapter
 
+    companion object{
+        var isSearch = false
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
@@ -38,13 +41,18 @@ class HomeActivity : AppCompatActivity(), OnClickListener {
             setHasFixedSize(true)
             adapter = homeAdapter
         }
-
-        for(i in  0..10){
-            model.test()
-        }
         binding.btnSearch.setOnClickListener(this)
         binding.btnEdit.setOnClickListener (this)
         binding.btnChat.setOnClickListener (this)
+
+        if(isSearch){
+            isSearch =false
+            model.update()
+        }
+        else{
+            model.homeService()
+        }
+
     }
 
     override fun onClick(v: View?) {

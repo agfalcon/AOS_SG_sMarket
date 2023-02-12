@@ -1,10 +1,12 @@
 package com.smilestone.smarket.Edit
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
+import com.smilestone.smarket.Home.HomeActivity
 import com.smilestone.smarket.databinding.ActivityEditBinding
 import java.text.DecimalFormat
 
@@ -27,7 +29,12 @@ class EditActivity : AppCompatActivity() {
         }
 
         binding.btnEdit.setOnClickListener {
-            //TODO("글 작성시 서버에 올리기 해야함")
+            val result = model.upload()
+            if(result == 1){
+                val intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
 
         binding.editTitle.doAfterTextChanged {
@@ -38,7 +45,7 @@ class EditActivity : AppCompatActivity() {
             if(result.equals(binding.editPrice.text.toString())){
                 return@doAfterTextChanged
             }
-            model.liveData.value?.price = binding.editPrice.text.toString().replace(",","").toInt()
+            model.liveData.value?.price = binding.editPrice.text.toString().replace(",","").toLong()
             result = priceFormat.format(model.liveData.value?.price)
             binding.editPrice.setText(result)
             binding.editPrice.setSelection(result.length)
@@ -48,5 +55,6 @@ class EditActivity : AppCompatActivity() {
             model.liveData.value?.content = binding.editContent.text.toString()
             Toast.makeText(this, model.liveData.value?.content.toString(), Toast.LENGTH_SHORT).show()
         }
+
     }
 }

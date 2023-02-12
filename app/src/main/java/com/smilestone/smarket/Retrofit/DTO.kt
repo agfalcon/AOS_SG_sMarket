@@ -24,13 +24,32 @@ data class SignUp(
     val message: String
 )
 
-data class Post(
+data class Product(
+    @SerializedName("productId")
+    val productId: Long,
+
+    @SerializedName("sellerId")
+    val sellerId: Long,
+
+    @SerializedName("buyerId")
+    val buyerId: Long,
+
     @SerializedName("title")
     val title: String,
 
-    @SerializedName("time")
-    val time: String,
+    @SerializedName("content")
+    val content: String,
 
     @SerializedName("price")
-    val price: String,
+    val price: Long,
+
+    @SerializedName("state")
+    val state: Boolean,
+
+    @SerializedName("view")
+    val view: Long,
+
+    @SerializedName("localDateTime")
+    val localDateTime: String,
+
 )
