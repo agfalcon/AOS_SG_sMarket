@@ -1,6 +1,7 @@
 package com.smilestone.smarket.Home
 
 import android.app.Application
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -9,6 +10,7 @@ import com.smilestone.smarket.CODE_FAIL
 import com.smilestone.smarket.REQUSET_ERROR
 import com.smilestone.smarket.Retrofit.ConnectService
 import com.smilestone.smarket.STATUS_OK
+import kotlin.concurrent.thread
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
     data class PostData(val id: Long, val title: String, val time: String, val price: String)
@@ -49,7 +51,14 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     fun update(){
         list.clear()
         for(i in ConnectService.productData!!){
-            list.add(PostData(i.productId, i.title, i.localDateTime, i.price.toString()))
+            list.add(
+                HomeViewModel.PostData(
+                    i.productId,
+                    i.title,
+                    i.localDateTime,
+                    i.price.toString()
+                )
+            )
         }
         _posts.value = list
     }

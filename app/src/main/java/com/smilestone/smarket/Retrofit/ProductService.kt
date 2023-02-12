@@ -1,37 +1,27 @@
 package com.smilestone.smarket.Retrofit
 
+import org.json.JSONObject
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface ProductService {
 
-    @GET("/products")
+    @GET("/api/product/list/all")
     fun requestProducts(): Call<ArrayList<Product>>
 
-    @GET("/products/title")
+    @GET("/api/product/title")
     fun requestSearch(
-        @Field("title") title : String
+        @Query("title") title : String
     ): Call<ArrayList<Product>>
 
-    @POST("/product")
+
+    @POST("/api/product/post")
     fun uploadProduct(
-        @Field("sellerId")
-        sellerId: Long,
-        @Field("buyerId")
-        buyerId: Long,
-        @Field("title")
-        title: String,
-        @Field("content")
-        content: String,
-        @Field("price")
-        price: Long,
-        @Field("state")
-        state: Boolean,
-        @Field("view")
-        view: Long,
-        @Field("localDateTime")
-        localDateTime: String
+        @Body() params: EditData
     ):Call<Product>
+
+    @GET("api/product/id")
+    fun getItem(
+        @Query("productId") productId: Long
+    ) : Call<Product>
 }

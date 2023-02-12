@@ -53,3 +53,12 @@ data class Product(
     val localDateTime: String,
 
 )
+
+data class EditData(@SerializedName("sellerId")
+                    val sellerId: Long,
+                    @SerializedName("title")
+                    val title: String,
+                    @SerializedName("content")
+                    val content: String,
+                    @SerializedName("price") val price: Long
+                    )

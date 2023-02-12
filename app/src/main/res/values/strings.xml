@@ -13,4 +13,5 @@
     <string name="exit">닫기</string>
     <string name="input_price">가격 입력</string>
     <string name="edit_title">글 제목</string>
+    <string name="chat_start">채팅으로 거래하기</string>
 </resources>

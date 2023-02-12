@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.smilestone.smarket.Chat.ChatActivity
 import com.smilestone.smarket.Edit.EditActivity
+import com.smilestone.smarket.Item.ItemActivity
 import com.smilestone.smarket.Search.SearchActivity
 import com.smilestone.smarket.databinding.ActivityHomeBinding
 
@@ -44,6 +45,7 @@ class HomeActivity : AppCompatActivity(), OnClickListener {
         binding.btnSearch.setOnClickListener(this)
         binding.btnEdit.setOnClickListener (this)
         binding.btnChat.setOnClickListener (this)
+        binding.btnInfo.setOnClickListener(this)
 
         if(isSearch){
             isSearch =false
@@ -61,6 +63,7 @@ class HomeActivity : AppCompatActivity(), OnClickListener {
             binding.btnSearch.id -> Intent(applicationContext, SearchActivity::class.java)
             binding.btnChat.id -> Intent(applicationContext, ChatActivity::class.java)
             binding.btnEdit.id -> Intent(applicationContext, EditActivity::class.java)
+            binding.btnInfo.id -> Intent(applicationContext, ItemActivity::class.java)
             else -> return
         }
         Log.d("intent", intent.toString())

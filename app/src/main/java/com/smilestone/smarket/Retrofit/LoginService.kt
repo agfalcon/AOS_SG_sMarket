@@ -1,13 +1,11 @@
 package com.smilestone.smarket.Retrofit
 
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface LoginService {
 
+    @FormUrlEncoded
     @POST("/api/signin")
     fun requestLogin(
         @Field("userId") id:String,
