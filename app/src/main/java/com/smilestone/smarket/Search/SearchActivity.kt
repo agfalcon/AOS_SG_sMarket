@@ -2,6 +2,8 @@ package com.smilestone.smarket.Search
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.ViewModelProvider
 import com.smilestone.smarket.Home.HomeActivity
 import com.smilestone.smarket.Retrofit.ConnectService
 import com.smilestone.smarket.databinding.ActivitySearchBinding
@@ -9,14 +11,21 @@ import com.smilestone.smarket.databinding.ActivitySearchBinding
 class SearchActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySearchBinding
+    private lateinit var model: SearchViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        model = ViewModelProvider(this)[SearchViewModel::class.java]
         binding.btnSearch.setOnClickListener {
-            ConnectService.search(binding.contentSearch.toString())
+            ConnectService.search(model.keyword.value.toString())
             HomeActivity.isSearch = true
+        }
+
+        binding.contentSearch.doAfterTextChanged {
+            model.setKeyword(binding.contentSearch.toString())
         }
     }
 }
