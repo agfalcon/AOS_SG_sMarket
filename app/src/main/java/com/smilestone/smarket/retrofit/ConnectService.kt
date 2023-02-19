@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.smilestone.smarket.CODE_FAIL
 import com.smilestone.smarket.dto.*
+import com.smilestone.smarket.item.ItemViewModel
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -13,7 +14,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ConnectService {
     var signUpData: SignUp? = null
-    var itemData: Product? = null
 
     //초기 retrofit 빌드
     val retrofit = Retrofit.Builder().baseUrl("http://52.78.175.29:8088")
@@ -157,7 +157,6 @@ object ConnectService {
                 override fun onResponse(call: Call<Product>, response: Response<Product>) {
                     code.value = response.code()
                     product.value = response.body()
-                    Log.d("확인용", itemData.toString())
                 }
 
                 override fun onFailure(call: Call<Product>, t: Throwable) {

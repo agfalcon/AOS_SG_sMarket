@@ -84,7 +84,6 @@ class HomeActivity : AppCompatActivity(), OnClickListener {
             else -> return
         }
         intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION)
-        Log.d("intent", intent.toString())
         startActivity(intent)
     }
 }
