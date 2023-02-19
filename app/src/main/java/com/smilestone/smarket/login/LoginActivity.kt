@@ -1,4 +1,4 @@
-package com.smilestone.smarket.Login
+package com.smilestone.smarket.login
 
 import android.content.Context
 import android.content.Intent
@@ -9,13 +9,10 @@ import android.util.Log
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.smilestone.smarket.Home.HomeActivity
+import com.smilestone.smarket.home.HomeActivity
 import com.smilestone.smarket.LOGIN_TOKEN
-import com.smilestone.smarket.Retrofit.ConnectService
-import com.smilestone.smarket.SignUp.SignupActivity
-import com.smilestone.smarket.TOKEN
+import com.smilestone.smarket.signup.SignupActivity
 import com.smilestone.smarket.databinding.ActivityLoginBinding
-import org.json.JSONObject
 
 class LoginActivity : AppCompatActivity() {
 
@@ -44,12 +41,10 @@ class LoginActivity : AppCompatActivity() {
 
         binding.editId.doAfterTextChanged {
             model.loginData.value?.id = binding.editId.text.toString()
-            //TODO("아이디 양식 체크")
         }
 
         binding.editPw.doAfterTextChanged {
             model.loginData.value?.pw = binding.editPw.text.toString()
-            //TODO("비밀번호 양식 체크")
         }
 
         model.code.observe(this, Observer {

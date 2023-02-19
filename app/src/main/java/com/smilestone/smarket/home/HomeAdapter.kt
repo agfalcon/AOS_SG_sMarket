@@ -1,4 +1,4 @@
-package com.smilestone.smarket.Home
+package com.smilestone.smarket.home
 
 import android.content.Context
 import android.content.Intent
@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.smilestone.smarket.Item.ItemActivity
+import com.smilestone.smarket.item.ItemActivity
 import com.smilestone.smarket.PRODUCT_ID
 import com.smilestone.smarket.R
 

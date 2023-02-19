@@ -1,17 +1,14 @@
-package com.smilestone.smarket.Home
+package com.smilestone.smarket.home
 
 import android.app.Application
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.smilestone.smarket.CODE_FAIL
-import com.smilestone.smarket.REQUSET_ERROR
-import com.smilestone.smarket.Retrofit.ConnectService
+import com.smilestone.smarket.retrofit.ConnectService
 import com.smilestone.smarket.STATUS_OK
 import com.smilestone.smarket.dto.Product
-import kotlin.concurrent.thread
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
     data class PostData(val id: Long, val title: String, val time: String, val price: String)

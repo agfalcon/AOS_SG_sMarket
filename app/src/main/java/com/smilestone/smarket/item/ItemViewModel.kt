@@ -1,10 +1,10 @@
-package com.smilestone.smarket.Item
+package com.smilestone.smarket.item
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.smilestone.smarket.Retrofit.ConnectService
+import com.smilestone.smarket.retrofit.ConnectService
 import com.smilestone.smarket.dto.Product
 
 class ItemViewModel(application: Application) : AndroidViewModel(application) {

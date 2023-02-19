@@ -1,4 +1,4 @@
-package com.smilestone.smarket.Retrofit
+package com.smilestone.smarket.retrofit
 
 import okhttp3.Interceptor
 import okhttp3.Response

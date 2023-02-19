@@ -1,4 +1,4 @@
-package com.smilestone.smarket.Chat
+package com.smilestone.smarket.chat
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

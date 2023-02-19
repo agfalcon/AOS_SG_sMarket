@@ -1,14 +1,13 @@
-package com.smilestone.smarket.Login
+package com.smilestone.smarket.login
 
 import android.app.Application
-import android.icu.lang.UCharacter.GraphemeClusterBreak.L
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.smilestone.smarket.*
-import com.smilestone.smarket.Retrofit.ConnectService
+import com.smilestone.smarket.retrofit.ConnectService
 import com.smilestone.smarket.dto.Login
 
 

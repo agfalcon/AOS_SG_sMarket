@@ -1,7 +1,6 @@
-package com.smilestone.smarket.SignUp
+package com.smilestone.smarket.signup
 
 import android.app.Application
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -9,12 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import com.smilestone.smarket.CODE_FAIL
 import com.smilestone.smarket.REQUSET_ERROR
 import com.smilestone.smarket.REQUSET_OK
-import com.smilestone.smarket.Retrofit.ConnectService
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
-import okhttp3.Dispatcher
+import com.smilestone.smarket.retrofit.ConnectService
 
 class SignUpViewModel(application: Application) : AndroidViewModel(application) {
     data class userData(var id: String, var pw: String, var nickname: String)
@@ -48,7 +42,7 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
             }
             REQUSET_OK ->1
             REQUSET_ERROR->{
-                Toast.makeText(getApplication(), ConnectService.signUpData?.message.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(getApplication(), "이미 아이디가 존재합니다.", Toast.LENGTH_SHORT).show()
                 -1
             }
             else -> {

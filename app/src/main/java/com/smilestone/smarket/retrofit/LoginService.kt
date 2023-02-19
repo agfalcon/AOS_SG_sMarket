@@ -1,4 +1,4 @@
-package com.smilestone.smarket.Retrofit
+package com.smilestone.smarket.retrofit
 
 import com.smilestone.smarket.dto.Login
 import com.smilestone.smarket.dto.LoginData

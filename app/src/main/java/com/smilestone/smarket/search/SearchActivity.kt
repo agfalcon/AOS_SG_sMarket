@@ -1,11 +1,10 @@
-package com.smilestone.smarket.Search
+package com.smilestone.smarket.search
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
-import com.smilestone.smarket.Home.HomeActivity
-import com.smilestone.smarket.Retrofit.ConnectService
+import com.smilestone.smarket.home.HomeActivity
 import com.smilestone.smarket.databinding.ActivitySearchBinding
 
 class SearchActivity : AppCompatActivity() {

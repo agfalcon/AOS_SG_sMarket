@@ -1,4 +1,4 @@
-package com.smilestone.smarket.Edit
+package com.smilestone.smarket.edit
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,7 +7,7 @@ import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.smilestone.smarket.Home.HomeActivity
+import com.smilestone.smarket.home.HomeActivity
 import com.smilestone.smarket.databinding.ActivityEditBinding
 import java.text.DecimalFormat
 

@@ -1,8 +1,7 @@
-package com.smilestone.smarket.Retrofit
+package com.smilestone.smarket.retrofit
 
 import com.smilestone.smarket.dto.EditData
 import com.smilestone.smarket.dto.Product
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.*
 

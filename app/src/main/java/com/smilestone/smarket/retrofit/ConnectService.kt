@@ -1,6 +1,5 @@
-package com.smilestone.smarket.Retrofit
+package com.smilestone.smarket.retrofit
 
-import android.content.ClipData
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.smilestone.smarket.CODE_FAIL

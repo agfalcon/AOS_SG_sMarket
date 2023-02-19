@@ -17,49 +17,49 @@
         android:usesCleartextTraffic="true"
         >
         <activity
-            android:name=".Item.ItemActivity"
+            android:name=".item.ItemActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Chat.ChatActivity"
+            android:name=".chat.ChatActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Edit.EditActivity"
+            android:name=".edit.EditActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Search.SearchActivity"
+            android:name=".search.SearchActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Home.HomeActivity"
+            android:name=".home.HomeActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".SignUp.SignupActivity"
+            android:name=".signup.SignupActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Login.LoginActivity"
+            android:name=".login.LoginActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
