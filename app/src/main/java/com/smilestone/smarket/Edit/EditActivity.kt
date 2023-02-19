@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.smilestone.smarket.Home.HomeActivity
 import com.smilestone.smarket.databinding.ActivityEditBinding
@@ -29,13 +30,17 @@ class EditActivity : AppCompatActivity() {
         }
 
         binding.btnEdit.setOnClickListener {
-            val result = model.upload()
+            model.upload()
+        }
+
+        model.code.observe(this, Observer {
+            val result = model.checkCode()
             if(result == 1){
                 val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
                 finish()
             }
-        }
+        })
 
         binding.editTitle.doAfterTextChanged {
             model.liveData.value?.title = binding.editTitle.text.toString()

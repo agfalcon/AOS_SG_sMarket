@@ -7,7 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.smilestone.smarket.Item.ItemActivity
+import com.smilestone.smarket.PRODUCT_ID
 import com.smilestone.smarket.R
 
 class HomeAdapter(private val model: HomeViewModel, private val context: Context): RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
@@ -22,7 +25,9 @@ class HomeAdapter(private val model: HomeViewModel, private val context: Context
         }
 
         override fun onClick(view: View?) {
-
+            val intent = Intent(context, ItemActivity::class.java)
+            intent.putExtra(PRODUCT_ID, model.posts.value?.get(adapterPosition)?.id)
+            startActivity(context, intent, null)
         }
     }
 

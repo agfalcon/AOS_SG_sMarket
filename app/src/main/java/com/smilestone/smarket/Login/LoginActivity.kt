@@ -5,7 +5,9 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.smilestone.smarket.Home.HomeActivity
 import com.smilestone.smarket.LOGIN_TOKEN
@@ -13,6 +15,7 @@ import com.smilestone.smarket.Retrofit.ConnectService
 import com.smilestone.smarket.SignUp.SignupActivity
 import com.smilestone.smarket.TOKEN
 import com.smilestone.smarket.databinding.ActivityLoginBinding
+import org.json.JSONObject
 
 class LoginActivity : AppCompatActivity() {
 
@@ -24,6 +27,11 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         model = ViewModelProvider(this)[LoginViewModel::class.java]
+        val loginPreferences: SharedPreferences = getSharedPreferences(LOGIN_TOKEN, Context.MODE_PRIVATE)
+        Log.d("토큰", loginPreferences.getString(LOGIN_TOKEN,"").toString())
+        if(loginPreferences!=null && !loginPreferences.getString(LOGIN_TOKEN, "").equals("")){
+            model.jwtLogin(loginPreferences.getString(LOGIN_TOKEN,""))
+        }
 
         binding.btnSingup.setOnClickListener {
             val intent = Intent(this, SignupActivity::class.java)
@@ -31,9 +39,7 @@ class LoginActivity : AppCompatActivity() {
         }
         
         binding.btnLogin.setOnClickListener {
-            //loginAccess()
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
+            loginAccess()
         }
 
         binding.editId.doAfterTextChanged {
@@ -45,32 +51,25 @@ class LoginActivity : AppCompatActivity() {
             model.loginData.value?.pw = binding.editPw.text.toString()
             //TODO("비밀번호 양식 체크")
         }
+
+        model.code.observe(this, Observer {
+            val result = model.checkCode()
+            if(result == 1){
+                saveToken()
+                val intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        })
     }
 
-    private fun loginAccess(){
-        val loginPreferences: SharedPreferences = getSharedPreferences(LOGIN_TOKEN, Context.MODE_PRIVATE)
-        if(loginPreferences==null || loginPreferences.getString(TOKEN, "").equals("")){
-            val result = model.login()
-            if(result == 1){
-                val intent = Intent(this, HomeActivity::class.java)
-                startActivity(intent)
-                saveToken()
-                finish()
-            }
-        }
-        else{
-            val result = model.jwtLogin(loginPreferences.getString(TOKEN,""))
-            if(result == 1){
-                val intent = Intent(this, HomeActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-        }
+    private fun loginAccess() {
+        model.login()
     }
 
     private fun saveToken() {
         with(getSharedPreferences(LOGIN_TOKEN, Context.MODE_PRIVATE).edit()){
-            putString(TOKEN, ConnectService.loginData?.token)
+            putString(LOGIN_TOKEN, model.loginMessage?.value?.tokens?.accessToken.toString())
             apply()
         }
     }

@@ -10,25 +10,38 @@ import com.smilestone.smarket.CODE_FAIL
 import com.smilestone.smarket.REQUSET_ERROR
 import com.smilestone.smarket.REQUSET_OK
 import com.smilestone.smarket.Retrofit.ConnectService
-import com.smilestone.smarket.Retrofit.SignUp
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
+import okhttp3.Dispatcher
 
 class SignUpViewModel(application: Application) : AndroidViewModel(application) {
-    data class userData(var id: String, var pw: String, var email: String, var nickname: String)
+    data class userData(var id: String, var pw: String, var nickname: String)
 
     private val _signUpData = MutableLiveData<userData>()
+    private val _code = MutableLiveData<Int>()
+
     val signUpData: LiveData<userData>
         get() = _signUpData
 
+    val code : LiveData<Int>
+        get() = _code
+
     init{
-        _signUpData.value = userData("","","","")
+        _signUpData.value = userData("","","")
     }
 
-    fun signUp(): Int{
+    fun signUp(){
         if(!checkData())
-            return -1
-        val code:Int? = ConnectService.signUp(_signUpData.value?.id.toString(),_signUpData.value?.pw.toString(),
-        _signUpData.value?.email.toString(), _signUpData.value?.nickname.toString())
-        val result = when(code){
+            return
+        ConnectService.signUp(_signUpData.value?.id.toString(),_signUpData.value?.pw.toString(), _signUpData.value?.nickname.toString(), _code)
+        //Log.d("확인용", result.toString())
+
+    }
+
+    fun checkCode(): Int{
+        val result = when(_code.value){
             -1, CODE_FAIL -> {
                 Toast.makeText(getApplication(), "서버 오류", Toast.LENGTH_SHORT).show()
                 -1
@@ -48,7 +61,7 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
 
     private fun checkData(): Boolean{
         if(_signUpData.value?.id?.isEmpty() == true || _signUpData.value?.pw?.isEmpty() == true ||
-            _signUpData.value?.email?.isEmpty() == true || _signUpData.value?.nickname?.isEmpty() == true ){
+             _signUpData.value?.nickname?.isEmpty() == true ){
             Toast.makeText(getApplication(), "회원가입 양식을 모두 채워주세요", Toast.LENGTH_SHORT).show()
             return false
         }

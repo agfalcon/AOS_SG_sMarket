@@ -20,12 +20,13 @@ class SearchActivity : AppCompatActivity() {
 
         model = ViewModelProvider(this)[SearchViewModel::class.java]
         binding.btnSearch.setOnClickListener {
-            ConnectService.search(model.keyword.value.toString())
+            HomeActivity.keyword = model.keyword.value.toString()
             HomeActivity.isSearch = true
+            finish()
         }
 
         binding.contentSearch.doAfterTextChanged {
-            model.setKeyword(binding.contentSearch.toString())
+            model.setKeyword(binding.contentSearch.text.toString())
         }
     }
 }

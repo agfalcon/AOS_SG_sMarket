@@ -10,6 +10,7 @@ import com.smilestone.smarket.CODE_FAIL
 import com.smilestone.smarket.REQUSET_ERROR
 import com.smilestone.smarket.Retrofit.ConnectService
 import com.smilestone.smarket.STATUS_OK
+import com.smilestone.smarket.dto.Product
 import kotlin.concurrent.thread
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
@@ -17,8 +18,17 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     private val list = ArrayList<PostData>()
     private val _posts = MutableLiveData<ArrayList<PostData>>()
+    private val _code = MutableLiveData<Int>()
+    private val _post = MutableLiveData<ArrayList<Product>>()
+
+    val post : LiveData<ArrayList<Product>>
+        get() = _post
+
     val posts : LiveData<ArrayList<PostData>>
         get() = _posts
+
+    val code : LiveData<Int>
+        get() = _code
 
     init{
         _posts.value = list
@@ -30,15 +40,19 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun homeService(){
-        val code: Int? = ConnectService.home() ?: -1
-        when(code){
+        ConnectService.home(_code, _post)
+    }
+
+    fun checkCode(){
+        when(_code.value){
             -1, CODE_FAIL -> {
                 Toast.makeText(getApplication(), "서버 오류", Toast.LENGTH_SHORT).show()
             }
             STATUS_OK ->{
                 list.clear()
-                for(i in ConnectService.productData!!){
-                    list.add(PostData(i.productId, i.title, i.localDateTime, i.price.toString()))
+                for(i in 0 until post.value?.size!!){
+                    val data = post.value?.get(i)
+                    list.add(PostData(data?.productId ?: 0, data?.title ?: "", data?.localDateTime ?: "", data?.price.toString() ))
                 }
                 _posts.value = list
             }
@@ -48,18 +62,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun update(){
-        list.clear()
-        for(i in ConnectService.productData!!){
-            list.add(
-                HomeViewModel.PostData(
-                    i.productId,
-                    i.title,
-                    i.localDateTime,
-                    i.price.toString()
-                )
-            )
-        }
-        _posts.value = list
+    fun search(keyword: String){
+        ConnectService.search(keyword, _code, _post)
     }
 }

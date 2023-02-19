@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.smilestone.smarket.databinding.ActivitySignupBinding
 
@@ -25,18 +26,20 @@ class SignupActivity : AppCompatActivity() {
         binding.editPw.doAfterTextChanged {
             model.signUpData.value?.pw = binding.editPw.text.toString()
         }
-        binding.editEmail.doAfterTextChanged {
-            model.signUpData.value?.email = binding.editEmail.text.toString()
-        }
+
         binding.editNickname.doAfterTextChanged {
             model.signUpData.value?.nickname = binding.editNickname.text.toString()
         }
         binding.btnSingup.setOnClickListener {
-            val result = model.signUp()
+            model.signUp()
+        }
+
+        model.code.observe(this, Observer {
+            val result = model.checkCode()
             if(result==1){
                 Toast.makeText(this, "회원가입 완료", Toast.LENGTH_SHORT).show()
                 finish()
             }
-        }
+        })
     }
 }

@@ -1,13 +1,15 @@
 package com.smilestone.smarket.Login
 
 import android.app.Application
+import android.icu.lang.UCharacter.GraphemeClusterBreak.L
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.smilestone.smarket.*
 import com.smilestone.smarket.Retrofit.ConnectService
-import com.smilestone.smarket.Retrofit.Login
+import com.smilestone.smarket.dto.Login
 
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
@@ -15,52 +17,46 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
 
     private val _loginData = MutableLiveData<inputData>()
+    private val _code = MutableLiveData<Int>()
+    private val _loginMessage = MutableLiveData<Login>()
 
     val loginData : LiveData<inputData>
         get() = _loginData
+
+    val code: LiveData<Int>
+        get() = _code
+
+    val loginMessage : LiveData<Login>
+        get() = _loginMessage
 
 
     init{
        _loginData.value = inputData("","")
     }
 
-    fun login(): Int{
+    fun login(){
         if(!checkLogin()){
-            return -1
+            return
         }
-        val code: Int? = ConnectService.login(_loginData.value?.id.toString(), _loginData.value?.pw.toString()) ?: -1
-        val result = when(code){
+        ConnectService.login(_loginData.value?.id.toString(), _loginData.value?.pw.toString(), _code, _loginMessage) ?: -1
+    }
+
+    fun jwtLogin(token: String?){
+        ConnectService.jwtLogin(token,_code, _loginMessage)
+    }
+
+    fun checkCode(): Int{
+        Log.d("로그인", _loginMessage.value.toString())
+        val result = when(_code.value){
             -1, CODE_FAIL -> {
                 Toast.makeText(getApplication(), "서버 오류", Toast.LENGTH_SHORT).show()
                 -1
             }
-            REQUSET_OK ->{
-                1
-            }
-            REQUSET_ERROR->{
-                Toast.makeText(getApplication(), ConnectService.loginData?.message.toString(), Toast.LENGTH_SHORT).show()
-                -1
-            }
-            else -> {
-                Toast.makeText(getApplication(), "로그인 오류", Toast.LENGTH_SHORT).show()
-                -1
-            }
-        }
-        return result
-    }
-
-    fun jwtLogin(token: String?): Int{
-        val code: Int? = ConnectService.jwtLogin(token)
-        val result = when(code){
-            -1, CODE_FAIL->{
-                Toast.makeText(getApplication(), "서버 오류", Toast.LENGTH_SHORT).show()
-                -1
-            }
-            STATUS_OK->{
+            STATUS_OK ->{
                 1
             }
             REQUSET_ERROR, NO_AUTHORIZATION->{
-                Toast.makeText(getApplication(), ConnectService.loginData?.message.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(getApplication(), "잘못된 로그인 정보입니다", Toast.LENGTH_SHORT).show()
                 -1
             }
             else -> {

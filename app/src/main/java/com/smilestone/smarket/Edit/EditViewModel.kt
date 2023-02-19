@@ -16,6 +16,11 @@ class EditViewModel(application: Application) : AndroidViewModel(application) {
 
 
     private val _liveData = MutableLiveData<editData>()
+    private val _code = MutableLiveData<Int>()
+
+    val code: LiveData<Int>
+        get() = _code
+
     val liveData: LiveData<editData>
         get() = _liveData
 
@@ -23,9 +28,12 @@ class EditViewModel(application: Application) : AndroidViewModel(application) {
         _liveData.value = editData("" ,0,"")
     }
 
-    fun upload() : Int{
-        val code: Int? = ConnectService.upload(title=_liveData.value?.title?:"", content=_liveData.value?.content ?: "", price = _liveData.value?.price?: 0) ?: -1
-        val result = when(code){
+    fun upload(){
+        ConnectService.upload(title=_liveData.value?.title?:"", content=_liveData.value?.content ?: "", price = _liveData.value?.price?: 0, code = _code)
+    }
+
+    fun checkCode(): Int{
+        val result = when(_code.value){
             -1, CODE_FAIL -> {
                 Toast.makeText(getApplication(), "서버 오류", Toast.LENGTH_SHORT).show()
                 -1
