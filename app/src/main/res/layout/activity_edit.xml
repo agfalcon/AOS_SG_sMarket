@@ -150,7 +150,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:textColor="@color/black"
         android:fontFamily="@font/notosanskr_light"
-        android:text="미적분 기술 공유"
         android:textSize="18sp"
         android:gravity="start"
         android:padding="12dp"

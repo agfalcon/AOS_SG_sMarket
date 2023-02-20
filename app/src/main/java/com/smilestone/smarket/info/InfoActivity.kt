@@ -1,4 +1,4 @@
-package com.smilestone.smarket.chat
+package com.smilestone.smarket.info
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,24 +6,24 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
-import com.smilestone.smarket.databinding.ActivityChatBinding
-import com.smilestone.smarket.edit.EditActivity
+import com.smilestone.smarket.R
+import com.smilestone.smarket.chat.ChatActivity
+import com.smilestone.smarket.databinding.ActivityInfoBinding
 import com.smilestone.smarket.home.HomeActivity
-import com.smilestone.smarket.info.InfoActivity
-import com.smilestone.smarket.item.ItemActivity
-import com.smilestone.smarket.search.SearchActivity
 
-class ChatActivity : AppCompatActivity(), OnClickListener {
+class InfoActivity : AppCompatActivity(), OnClickListener {
 
-    private lateinit var binding: ActivityChatBinding
+    private lateinit var binding: ActivityInfoBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityChatBinding.inflate(layoutInflater)
+        binding = ActivityInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.btnHome.setOnClickListener(this)
         binding.btnInfo.setOnClickListener(this)
         binding.btnChat.setOnClickListener(this)
+
+
     }
 
     override fun onClick(v: View?) {

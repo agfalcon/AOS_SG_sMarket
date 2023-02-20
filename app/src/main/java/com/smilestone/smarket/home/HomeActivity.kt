@@ -15,6 +15,7 @@ import com.smilestone.smarket.edit.EditActivity
 import com.smilestone.smarket.item.ItemActivity
 import com.smilestone.smarket.search.SearchActivity
 import com.smilestone.smarket.databinding.ActivityHomeBinding
+import com.smilestone.smarket.info.InfoActivity
 
 class HomeActivity : AppCompatActivity(), OnClickListener {
 
@@ -80,7 +81,7 @@ class HomeActivity : AppCompatActivity(), OnClickListener {
             binding.btnSearch.id -> Intent(applicationContext, SearchActivity::class.java)
             binding.btnChat.id -> Intent(applicationContext, ChatActivity::class.java)
             binding.btnEdit.id -> Intent(applicationContext, EditActivity::class.java)
-            binding.btnInfo.id -> Intent(applicationContext, ItemActivity::class.java)
+            binding.btnInfo.id -> Intent(applicationContext, InfoActivity::class.java)
             else -> return
         }
         intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION)
