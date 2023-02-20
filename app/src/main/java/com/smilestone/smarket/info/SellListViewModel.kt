@@ -1,4 +1,4 @@
-package com.smilestone.smarket.home
+package com.smilestone.smarket.info
 
 import android.app.Application
 import android.widget.Toast
@@ -6,11 +6,11 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.smilestone.smarket.CODE_FAIL
-import com.smilestone.smarket.retrofit.ConnectService
 import com.smilestone.smarket.STATUS_OK
 import com.smilestone.smarket.dto.Product
+import com.smilestone.smarket.retrofit.ConnectService
 
-class HomeViewModel(application: Application) : AndroidViewModel(application) {
+class SellListViewModel(application: Application) : AndroidViewModel(application) {
     data class PostData(val id: Long, val title: String, val time: String, val price: String)
 
     private val list = ArrayList<PostData>()
@@ -32,8 +32,8 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun homeService(){
-        ConnectService.home(_code, _post)
+    fun getSellList(){
+        ConnectService.getSellList(_code, _post)
     }
 
     fun checkCode(){
@@ -50,12 +50,8 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                 _posts.value = list
             }
             else -> {
-                Toast.makeText(getApplication(), "게시글 불러오기 오류", Toast.LENGTH_SHORT).show()
+                Toast.makeText(getApplication(), "판매 리스트를 불러올 수 없습니다", Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-    fun search(keyword: String){
-        ConnectService.search(keyword, _code, _post)
     }
 }

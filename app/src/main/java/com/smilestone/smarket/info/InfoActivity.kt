@@ -24,6 +24,8 @@ class InfoActivity : AppCompatActivity(), OnClickListener {
         binding.btnHome.setOnClickListener(this)
         binding.btnInfo.setOnClickListener(this)
         binding.btnChat.setOnClickListener(this)
+        binding.layerPurchase.setOnClickListener(this)
+        binding.layerLogout.setOnClickListener(this)
 
         binding.layerLogout.setOnClickListener {
             logout()
@@ -37,6 +39,8 @@ class InfoActivity : AppCompatActivity(), OnClickListener {
             binding.btnHome.id-> Intent(applicationContext, HomeActivity::class.java)
             binding.btnChat.id -> Intent(applicationContext, ChatActivity::class.java)
             binding.btnInfo.id -> Intent(applicationContext, InfoActivity::class.java)
+            binding.layerPurchase.id -> Intent(applicationContext, PurchaseListActivity::class.java)
+            binding.layerSell.id -> Intent(applicationContext, SellListActivity::class.java)
             else -> return
         }
         intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION)

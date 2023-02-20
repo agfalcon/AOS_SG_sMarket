@@ -25,4 +25,14 @@ interface ProductService {
     fun getItem(
         @Query("productId") productId: Long
     ) : Call<Product>
+
+    @GET("api/product/seller/all")
+    fun getSellList(
+        @Query("sellerId") userId: Long
+    ) : Call<ArrayList<Product>>
+
+    @GET("api/product/buyer/all")
+    fun getPurchaseList(
+        @Query("buyerId") userId: Long
+    ): Call<ArrayList<Product>>
 }

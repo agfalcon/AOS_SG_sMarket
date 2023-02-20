@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.smilestone.smarket.*
+import com.smilestone.smarket.data.User
 import com.smilestone.smarket.retrofit.ConnectService
 import com.smilestone.smarket.dto.Login
 

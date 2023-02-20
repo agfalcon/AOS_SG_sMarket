@@ -3,6 +3,7 @@ package com.smilestone.smarket.retrofit
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.smilestone.smarket.CODE_FAIL
+import com.smilestone.smarket.data.User
 import com.smilestone.smarket.dto.*
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -100,6 +101,46 @@ object ConnectService {
                     Log.e("Home", t.message.toString())
                     code.value = CODE_FAIL
                 }
+            })
+    }
+
+    //판매 리스트 서비스
+    fun getSellList(code: MutableLiveData<Int>, post:MutableLiveData<ArrayList<Product>>){
+        homeService.getSellList(User.id!!)
+            .enqueue(object: Callback<ArrayList<Product>>{
+                override fun onResponse(
+                    call: Call<ArrayList<Product>>,
+                    response: Response<ArrayList<Product>>
+                ) {
+                    code.value = response.code()
+                    post.value = response.body()
+                }
+
+                override fun onFailure(call: Call<ArrayList<Product>>, t: Throwable) {
+                    Log.e("SellList", t.message.toString())
+                    code.value = CODE_FAIL
+                }
+
+            })
+    }
+
+    //구매 리스트 서비스
+    fun getPurchaseList(code: MutableLiveData<Int>, post:MutableLiveData<ArrayList<Product>>){
+        homeService.getPurchaseList(User.id!!)
+            .enqueue(object: Callback<ArrayList<Product>>{
+                override fun onResponse(
+                    call: Call<ArrayList<Product>>,
+                    response: Response<ArrayList<Product>>
+                ) {
+                    code.value = response.code()
+                    post.value = response.body()
+                }
+
+                override fun onFailure(call: Call<ArrayList<Product>>, t: Throwable) {
+                    Log.e("PurchaseList", t.message.toString())
+                    code.value = CODE_FAIL
+                }
+
             })
     }
 
