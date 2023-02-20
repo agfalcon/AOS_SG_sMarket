@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import com.smilestone.smarket.CODE_FAIL
 import com.smilestone.smarket.retrofit.ConnectService
 import com.smilestone.smarket.STATUS_OK
+import com.smilestone.smarket.data.User
 
 class EditViewModel(application: Application) : AndroidViewModel(application) {
     data class editData(var title: String, var price: Long, var content: String)
@@ -27,7 +28,7 @@ class EditViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun upload(){
-        ConnectService.upload(title=_liveData.value?.title?:"", content=_liveData.value?.content ?: "", price = _liveData.value?.price?: 0, code = _code)
+        ConnectService.upload(User.id!!, title=_liveData.value?.title?:"", content=_liveData.value?.content ?: "", price = _liveData.value?.price?: 0, code = _code)
     }
 
     fun checkCode(): Int{

@@ -1,6 +1,7 @@
 package com.smilestone.smarket.info
 
 import android.app.Application
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -37,6 +38,7 @@ class SellListViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun checkCode(){
+        Log.d("테스트", _post.value.toString())
         when(_code.value){
             -1, CODE_FAIL -> {
                 Toast.makeText(getApplication(), "서버 오류", Toast.LENGTH_SHORT).show()

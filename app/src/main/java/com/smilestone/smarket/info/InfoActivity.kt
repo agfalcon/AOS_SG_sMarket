@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import com.smilestone.smarket.LOGIN_TOKEN
-import com.smilestone.smarket.R
 import com.smilestone.smarket.chat.ChatActivity
 import com.smilestone.smarket.databinding.ActivityInfoBinding
 import com.smilestone.smarket.home.HomeActivity
@@ -25,6 +24,7 @@ class InfoActivity : AppCompatActivity(), OnClickListener {
         binding.btnInfo.setOnClickListener(this)
         binding.btnChat.setOnClickListener(this)
         binding.layerPurchase.setOnClickListener(this)
+        binding.layerSell.setOnClickListener (this)
         binding.layerLogout.setOnClickListener(this)
 
         binding.layerLogout.setOnClickListener {

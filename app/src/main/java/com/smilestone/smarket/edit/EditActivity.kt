@@ -44,7 +44,7 @@ class EditActivity : AppCompatActivity() {
 
         binding.editTitle.doAfterTextChanged {
             model.liveData.value?.title = binding.editTitle.text.toString()
-            Toast.makeText(this, model.liveData.value?.title.toString(), Toast.LENGTH_SHORT).show()
+
         }
         binding.editPrice.doAfterTextChanged {
             if(result.equals(binding.editPrice.text.toString())){
@@ -54,11 +54,11 @@ class EditActivity : AppCompatActivity() {
             result = priceFormat.format(model.liveData.value?.price)
             binding.editPrice.setText(result)
             binding.editPrice.setSelection(result.length)
-            Toast.makeText(this, model.liveData.value?.price.toString(), Toast.LENGTH_SHORT).show()
+
         }
         binding.editContent.doAfterTextChanged {
             model.liveData.value?.content = binding.editContent.text.toString()
-            Toast.makeText(this, model.liveData.value?.content.toString(), Toast.LENGTH_SHORT).show()
+
         }
 
     }

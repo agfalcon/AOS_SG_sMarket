@@ -27,7 +27,7 @@ data class Product(
     @SerializedName("view")
     val view: Long,
 
-    @SerializedName("localDateTime")
+    @SerializedName("createdAt")
     val localDateTime: String,
 
     )

@@ -2,9 +2,11 @@ package com.smilestone.smarket.item
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.smilestone.smarket.PRODUCT_ID
+import com.smilestone.smarket.data.User
 import com.smilestone.smarket.databinding.ActivityItemBinding
 import java.text.DecimalFormat
 
@@ -32,8 +34,14 @@ class ItemActivity : AppCompatActivity() {
                 binding.view.text = model.item.value?.view.toString()
                 binding.content.text = model.item.value?.content
                 binding.textPrice.text = priceFormat.format(model.item.value?.price) + "원"
+
+                if(model.product.value?.sellerId == User.id){
+                    binding.btnChat.visibility = View.INVISIBLE
+                }
             })
         })
+
+
 
         model.item(productId)
 
