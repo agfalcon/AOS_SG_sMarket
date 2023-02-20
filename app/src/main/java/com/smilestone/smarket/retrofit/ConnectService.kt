@@ -15,10 +15,25 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ConnectService {
     var signUpData: SignUp? = null
 
+
     //초기 retrofit 빌드
     val retrofit = Retrofit.Builder().baseUrl("http://52.78.175.29:8088")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
+
+    var homeService: ProductService = retrofit.create(ProductService::class.java)
+    lateinit var userService: UserService
+
+    var retrofitToken :Retrofit? = null
+
+    fun getToken(token: String){
+        val jwtClient = OkHttpClient.Builder().addInterceptor(AuthInterceptor(token)).build()
+        retrofitToken = Retrofit.Builder().client(jwtClient)
+                .baseUrl("http://52.78.175.29:8088")
+                .addConverterFactory(GsonConverterFactory.create()).build()
+        homeService = retrofitToken!!.create(ProductService::class.java)
+        userService = retrofitToken!!.create(UserService::class.java)
+    }
 
 
     //로그인 서비스
@@ -83,11 +98,29 @@ object ConnectService {
             })
     }
 
+    //중복확인 서비스
+    fun checkRedundancy(userId: String, code: MutableLiveData<Int>, result: MutableLiveData<Boolean>){
+        signUpService.requestRedundancy(userId)
+            .enqueue(object : Callback<Boolean>{
+                override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                    code.value = response.code()
+                    result.value = response.body()
+                }
+
+                override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                    code.value = CODE_FAIL
+                    Log.d("중복확인", t.message.toString())
+                }
+
+            })
+
+    }
+
 
     //홈 화면 서비스
-    val homeService: ProductService = retrofit.create(ProductService::class.java)
+
     fun home(code: MutableLiveData<Int>, post:MutableLiveData<ArrayList<Product>>){
-        homeService.requestProducts()
+        homeService.requestProducts(User.token!!)
             .enqueue(object : Callback<ArrayList<Product>> {
                 override fun onResponse(
                     call: Call<ArrayList<Product>>, response: Response<ArrayList<Product>>
@@ -106,7 +139,7 @@ object ConnectService {
 
     //판매 리스트 서비스
     fun getSellList(code: MutableLiveData<Int>, post:MutableLiveData<ArrayList<Product>>){
-        homeService.getSellList(User.id!!)
+        homeService.getSellList(User.token!!, User.id!!)
             .enqueue(object: Callback<ArrayList<Product>>{
                 override fun onResponse(
                     call: Call<ArrayList<Product>>,
@@ -126,7 +159,7 @@ object ConnectService {
 
     //구매 리스트 서비스
     fun getPurchaseList(code: MutableLiveData<Int>, post:MutableLiveData<ArrayList<Product>>){
-        homeService.getPurchaseList(User.id!!)
+        homeService.getPurchaseList(User.token!!, User.id!!)
             .enqueue(object: Callback<ArrayList<Product>>{
                 override fun onResponse(
                     call: Call<ArrayList<Product>>,
@@ -148,7 +181,7 @@ object ConnectService {
     //검색 서비스
     fun search(title: String, code: MutableLiveData<Int>, post:MutableLiveData<ArrayList<Product>>){
         Log.d("테스트", title)
-        homeService.requestSearch(title)
+        homeService.requestSearch(User.token!!, title)
             .enqueue(object : Callback<ArrayList<Product>> {
                 override fun onResponse(
                     call: Call<ArrayList<Product>>, response: Response<ArrayList<Product>>
@@ -174,7 +207,7 @@ object ConnectService {
         code: MutableLiveData<Int>
     ){
         val editData = EditData(sellerId, title, content, price)
-        homeService.uploadProduct(editData)
+        homeService.uploadProduct(User.token!!, editData)
             .enqueue(object : Callback<Product> {
                 override fun onResponse(call: Call<Product>, response: Response<Product>) {
                     code.value = response.code()
@@ -192,7 +225,7 @@ object ConnectService {
 
     //글 보기 서비스
     fun item(id: Long, code: MutableLiveData<Int>, product: MutableLiveData<Product>) {
-        homeService.getItem(id.toLong()).enqueue(
+        homeService.getItem(User.token!!, id.toLong()).enqueue(
             object : Callback<Product> {
                 override fun onResponse(call: Call<Product>, response: Response<Product>) {
                     code.value = response.code()
@@ -206,4 +239,22 @@ object ConnectService {
             }
         )
     }
+
+    //유저 정보 받아오기
+    fun getUser(result: MutableLiveData<Boolean>){
+        userService.getUser(User.token!!, User.id!!)
+            .enqueue(object : Callback<UserData>{
+                override fun onResponse(call: Call<UserData>, response: Response<UserData>) {
+                    User.nickname = response.body()?.nickName ?: ""
+                    result.value = true
+                    Log.d("테스트", User.nickname.toString())
+                }
+
+                override fun onFailure(call: Call<UserData>, t: Throwable) {
+                    Log.d("유저", t.message.toString())
+                }
+
+            })
+    }
+
 }

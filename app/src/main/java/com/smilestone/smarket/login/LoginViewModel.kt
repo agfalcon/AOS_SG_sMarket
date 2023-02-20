@@ -43,6 +43,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
     fun jwtLogin(token: String?, id: String?){
         ConnectService.jwtLogin(token, id,_code, _loginMessage)
+        Log.d("테스트", _loginMessage.value.toString())
     }
 
     fun checkCode(): Int{
@@ -67,6 +68,10 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         return result
     }
 
+    fun saveUser(){
+        User.id = _loginMessage.value?.id
+        User.userId = _loginMessage.value?.userId
+    }
 
     private fun checkLogin(): Boolean{
         if(_loginData.value?.id?.isEmpty() == true || _loginData.value?.pw?.isEmpty() == true){

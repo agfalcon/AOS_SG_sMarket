@@ -17,6 +17,11 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     private val _posts = MutableLiveData<ArrayList<PostData>>()
     private val _code = MutableLiveData<Int>()
     private val _post = MutableLiveData<ArrayList<Product>>()
+    private val _response = MutableLiveData<Boolean>(false)
+
+
+    val response : LiveData<Boolean>
+        get() = _response
 
     val post : LiveData<ArrayList<Product>>
         get() = _post
@@ -31,7 +36,14 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         _posts.value = list
     }
 
+    fun setResponse(boolean: Boolean){
+        _response.value = boolean
+    }
 
+
+    fun saveUser(){
+        ConnectService.getUser(_response)
+    }
     fun homeService(){
         ConnectService.home(_code, _post)
     }

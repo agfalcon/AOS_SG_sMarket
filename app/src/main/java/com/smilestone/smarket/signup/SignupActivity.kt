@@ -17,6 +17,7 @@ class SignupActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignupBinding
     private lateinit var model: SignUpViewModel
+    private var isRedundant: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +29,7 @@ class SignupActivity : AppCompatActivity() {
         binding.editId.doAfterTextChanged {
             model.signUpData.value?.id = binding.editId.text.toString()
             isValidId()
+            isRedundant = true
         }
 
         binding.editPw.doAfterTextChanged {
@@ -38,12 +40,19 @@ class SignupActivity : AppCompatActivity() {
             checkSame()
         }
 
+        binding.btnRedundancy.setOnClickListener {
+            model.checkRedundancy()
+        }
+
+
+
+
+
         binding.editNickname.doAfterTextChanged {
             model.signUpData.value?.nickname = binding.editNickname.text.toString()
         }
         binding.btnSingup.setOnClickListener {
-            Log.d("테스트", "${isValidId().toString()}, ${isValidPw().toString()}, ${checkSame().toString()}, ${binding.editNickname.text.isNullOrEmpty()}")
-            if(isValidId() && isValidPw() && checkSame() && !binding.editNickname.text.isNullOrEmpty())
+            if(isValidId() && isValidPw() && checkSame() && !binding.editNickname.text.isNullOrEmpty() && !isRedundant)
                 model.signUp()
             else
                 Toast.makeText(this, "회원가입 양식을 확인해주세요", Toast.LENGTH_SHORT).show()
@@ -54,6 +63,16 @@ class SignupActivity : AppCompatActivity() {
             if(result==1){
                 Toast.makeText(this, "회원가입 완료", Toast.LENGTH_SHORT).show()
                 finish()
+            }
+        })
+
+        model.result.observe(this, Observer {
+            if(model.result.value == true){
+                Toast.makeText(this, "중복된 아이디입니다.", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                isRedundant = false
+                Toast.makeText(this, "유효한 아이디", Toast.LENGTH_SHORT).show()
             }
         })
     }

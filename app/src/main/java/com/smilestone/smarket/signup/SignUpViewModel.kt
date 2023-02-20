@@ -1,6 +1,7 @@
 package com.smilestone.smarket.signup
 
 import android.app.Application
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -8,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import com.smilestone.smarket.CODE_FAIL
 import com.smilestone.smarket.REQUSET_ERROR
 import com.smilestone.smarket.REQUSET_OK
+import com.smilestone.smarket.STATUS_OK
 import com.smilestone.smarket.retrofit.ConnectService
 
 class SignUpViewModel(application: Application) : AndroidViewModel(application) {
@@ -15,6 +17,10 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
 
     private val _signUpData = MutableLiveData<userData>()
     private val _code = MutableLiveData<Int>()
+    private val _result = MutableLiveData<Boolean>()
+
+    val result : LiveData<Boolean>
+        get() = _result
 
     val signUpData: LiveData<userData>
         get() = _signUpData
@@ -34,13 +40,19 @@ class SignUpViewModel(application: Application) : AndroidViewModel(application) 
 
     }
 
+    fun checkRedundancy(){
+        ConnectService.checkRedundancy(_signUpData.value?.id ?: "", _code, _result)
+    }
+
     fun checkCode(): Int{
+        Log.d("테스트", _code.value.toString())
         val result = when(_code.value){
             -1, CODE_FAIL -> {
                 Toast.makeText(getApplication(), "서버 오류", Toast.LENGTH_SHORT).show()
                 -1
             }
-            REQUSET_OK ->1
+            REQUSET_OK->1
+            STATUS_OK-> 2
             REQUSET_ERROR->{
                 Toast.makeText(getApplication(), "이미 아이디가 존재합니다.", Toast.LENGTH_SHORT).show()
                 -1

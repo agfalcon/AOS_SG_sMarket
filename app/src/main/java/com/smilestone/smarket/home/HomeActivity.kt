@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.smilestone.smarket.chat.ChatActivity
+import com.smilestone.smarket.data.User
 import com.smilestone.smarket.edit.EditActivity
 import com.smilestone.smarket.item.ItemActivity
 import com.smilestone.smarket.search.SearchActivity
@@ -34,10 +35,20 @@ class HomeActivity : AppCompatActivity(), OnClickListener {
 
         model = ViewModelProvider(this)[HomeViewModel::class.java]
         homeAdapter = HomeAdapter(model, this)
+        model.saveUser()
+
+        binding.textNickname.text = User.nickname
 
         model.posts.observe(this){
             homeAdapter.notifyDataSetChanged()
         }
+
+        model.response.observe(this, Observer {
+            if(model.response.value==true){
+                binding.textNickname.text = User.nickname
+                model.setResponse(false)
+            }
+        })
 
         binding.postList.apply{
             layoutManager = LinearLayoutManager(applicationContext)

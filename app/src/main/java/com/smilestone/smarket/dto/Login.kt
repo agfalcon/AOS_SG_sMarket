@@ -11,6 +11,9 @@ data class Login(
         @SerializedName("code")
         val code: String,
 
+        @SerializedName("id")
+        val id: Long,
+
         @SerializedName("userId")
         val userId: String,
 

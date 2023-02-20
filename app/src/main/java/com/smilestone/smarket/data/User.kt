@@ -6,4 +6,5 @@ object User {
     var id: Long? = null
     var nickname: String? = null
     var userId: String? = null
+    var token: String? = null
 }

@@ -8,31 +8,38 @@ import retrofit2.http.*
 interface ProductService {
 
     @GET("/api/product/list/all")
-    fun requestProducts(): Call<ArrayList<Product>>
+    fun requestProducts(
+        @Header("Authorization") token: String
+    ): Call<ArrayList<Product>>
 
     @GET("/api/product/title")
     fun requestSearch(
+        @Header("Authorization") token: String,
         @Query("title") title : String
     ): Call<ArrayList<Product>>
 
 
     @POST("/api/product/post")
     fun uploadProduct(
+        @Header("Authorization") token: String,
         @Body() params: EditData
     ):Call<Product>
 
     @GET("api/product/id")
     fun getItem(
+        @Header("Authorization") token: String,
         @Query("productId") productId: Long
     ) : Call<Product>
 
     @GET("api/product/seller/all")
     fun getSellList(
+        @Header("Authorization") token: String,
         @Query("sellerId") userId: Long
     ) : Call<ArrayList<Product>>
 
     @GET("api/product/buyer/all")
     fun getPurchaseList(
+        @Header("Authorization") token: String,
         @Query("buyerId") userId: Long
     ): Call<ArrayList<Product>>
 }

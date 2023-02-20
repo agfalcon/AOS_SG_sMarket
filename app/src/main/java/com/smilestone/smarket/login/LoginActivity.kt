@@ -13,13 +13,16 @@ import com.smilestone.smarket.LOGIN_ID
 import com.smilestone.smarket.home.HomeActivity
 import com.smilestone.smarket.LOGIN_TOKEN
 import com.smilestone.smarket.MainActivity
+import com.smilestone.smarket.data.User
 import com.smilestone.smarket.signup.SignupActivity
 import com.smilestone.smarket.databinding.ActivityLoginBinding
+import com.smilestone.smarket.retrofit.ConnectService
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var model: LoginViewModel
+    private var isJWT = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -28,8 +31,12 @@ class LoginActivity : AppCompatActivity() {
         model = ViewModelProvider(this)[LoginViewModel::class.java]
         val loginPreferences: SharedPreferences = getSharedPreferences(LOGIN_TOKEN, Context.MODE_PRIVATE)
         Log.d("토큰", loginPreferences.getString(LOGIN_TOKEN,"").toString())
-        if(loginPreferences!=null && !loginPreferences.getString(LOGIN_TOKEN, "").equals("")){
+
+        if(loginPreferences!=null && !loginPreferences.getString(LOGIN_TOKEN, "").equals("") && !loginPreferences.getString(
+                LOGIN_TOKEN,"").equals("null")){
+            Log.d("테스트", "이거되나요?")
             model.jwtLogin(loginPreferences.getString(LOGIN_TOKEN,""), loginPreferences.getString(LOGIN_ID,""))
+            isJWT = true
         }
 
         binding.btnSingup.setOnClickListener {
@@ -59,6 +66,9 @@ class LoginActivity : AppCompatActivity() {
             if(result == 1){
                 saveToken()
                 saveId()
+                User.token = loginPreferences.getString(LOGIN_TOKEN,"")
+                ConnectService.getToken(User.token!!)
+                model.saveUser()
                 val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -71,15 +81,17 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun saveToken() {
+        if(isJWT) return
         with(getSharedPreferences(LOGIN_TOKEN, Context.MODE_PRIVATE).edit()){
             putString(LOGIN_TOKEN, model.loginMessage?.value?.tokens?.accessToken.toString())
-            apply()
+            commit()
         }
     }
     private fun saveId(){
+        if(isJWT) return
         with(getSharedPreferences(LOGIN_TOKEN, Context.MODE_PRIVATE).edit()){
             putString(LOGIN_ID, binding.editId.text.toString())
-            apply()
+            commit()
         }
     }
 }
