@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.smilestone.smarket.CODE_FAIL
 import com.smilestone.smarket.data.User
+import com.smilestone.smarket.data.User.nickname
 import com.smilestone.smarket.dto.*
+import com.smilestone.smarket.signup.SignUpViewModel
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,6 +29,7 @@ object ConnectService {
     var retrofitToken :Retrofit? = null
 
     fun getToken(token: String){
+        Log.d("테스트 토큰", token)
         val jwtClient = OkHttpClient.Builder().addInterceptor(AuthInterceptor(token)).build()
         retrofitToken = Retrofit.Builder().client(jwtClient)
                 .baseUrl("http://52.78.175.29:8088")
@@ -62,13 +65,14 @@ object ConnectService {
                 .baseUrl("http://52.78.175.29:8088")
                 .addConverterFactory(GsonConverterFactory.create()).build()
         }
+        Log.d("테스트 로그인", id.toString())
         val jwtLoginService: LoginService = retrofit.create(LoginService::class.java)
         jwtLoginService.requestJWTLogin(token ?: "", id ?: "")
             .enqueue(object : Callback<Login> {
                 override fun onResponse(call: Call<Login>, response: Response<Login>) {
                     loginMessage.value = response.body()
                     code.value = response.code()
-                    Log.d("로그인", code.value.toString())
+                    Log.d("로그인 테스트", code.value.toString())
                 }
 
                 override fun onFailure(call: Call<Login>, t: Throwable) {
@@ -252,6 +256,39 @@ object ConnectService {
 
                 override fun onFailure(call: Call<UserData>, t: Throwable) {
                     Log.d("유저", t.message.toString())
+                }
+
+            })
+    }
+
+    //닉네임 변경
+    fun changeNickName(nickname: String, code: MutableLiveData<Int>){
+        userService.changeNickName(User.token!!, User.nickname!!, nickname)
+            .enqueue(object : Callback<UserData>{
+                override fun onResponse(call: Call<UserData>, response: Response<UserData>) {
+                    User.nickname = response.body()?.nickName
+                    code.value = response.code()
+                }
+
+                override fun onFailure(call: Call<UserData>, t: Throwable) {
+                    code.value = CODE_FAIL
+                    Log.d("닉네임 변경", t.message.toString())
+                }
+
+            })
+    }
+
+    //비밀번호 변경
+    fun changePassword(password: String, newPassword: String,  code: MutableLiveData<Int>){
+        userService.changePassword(User.token!!, User.id!!, password, newPassword)
+            .enqueue(object : Callback<UserData>{
+                override fun onResponse(call: Call<UserData>, response: Response<UserData>) {
+                    code.value = response.code()
+                }
+
+                override fun onFailure(call: Call<UserData>, t: Throwable) {
+                    code.value = CODE_FAIL
+                    Log.d("비밀번호 변경", t.message.toString())
                 }
 
             })

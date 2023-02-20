@@ -45,6 +45,7 @@ class LoginActivity : AppCompatActivity() {
         }
         
         binding.btnLogin.setOnClickListener {
+            isJWT = false
             loginAccess()
         }
 

@@ -23,7 +23,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:fontFamily="@font/notosanskr_bold"
-        android:text="김근범"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/user_image"

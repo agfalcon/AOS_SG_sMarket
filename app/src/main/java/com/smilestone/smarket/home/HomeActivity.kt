@@ -48,6 +48,7 @@ class HomeActivity : AppCompatActivity(), OnClickListener {
                 binding.textNickname.text = User.nickname
                 model.setResponse(false)
             }
+            Log.d("테스트", User.nickname.toString())
         })
 
         binding.postList.apply{

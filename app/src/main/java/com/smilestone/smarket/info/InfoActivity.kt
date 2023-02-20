@@ -8,8 +8,11 @@ import android.view.View
 import android.view.View.OnClickListener
 import com.smilestone.smarket.LOGIN_TOKEN
 import com.smilestone.smarket.chat.ChatActivity
+import com.smilestone.smarket.data.User
 import com.smilestone.smarket.databinding.ActivityInfoBinding
 import com.smilestone.smarket.home.HomeActivity
+import com.smilestone.smarket.info.account.NickNameActivity
+import com.smilestone.smarket.info.account.PasswordActivity
 import com.smilestone.smarket.login.LoginActivity
 
 class InfoActivity : AppCompatActivity(), OnClickListener {
@@ -26,11 +29,19 @@ class InfoActivity : AppCompatActivity(), OnClickListener {
         binding.layerPurchase.setOnClickListener(this)
         binding.layerSell.setOnClickListener (this)
         binding.layerLogout.setOnClickListener(this)
+        binding.layerChangeNickname.setOnClickListener(this)
+        binding.layerChangePassword.setOnClickListener(this)
+
 
         binding.layerLogout.setOnClickListener {
             logout()
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.nickname.text = User.nickname
     }
 
     override fun onClick(v: View?) {
@@ -41,6 +52,8 @@ class InfoActivity : AppCompatActivity(), OnClickListener {
             binding.btnInfo.id -> Intent(applicationContext, InfoActivity::class.java)
             binding.layerPurchase.id -> Intent(applicationContext, PurchaseListActivity::class.java)
             binding.layerSell.id -> Intent(applicationContext, SellListActivity::class.java)
+            binding.layerChangeNickname.id -> Intent(applicationContext, NickNameActivity::class.java)
+            binding.layerChangePassword.id -> Intent(applicationContext, PasswordActivity::class.java)
             else -> return
         }
         intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION)
