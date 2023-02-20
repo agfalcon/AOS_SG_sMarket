@@ -40,8 +40,8 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         ConnectService.login(_loginData.value?.id.toString(), _loginData.value?.pw.toString(), _code, _loginMessage) ?: -1
     }
 
-    fun jwtLogin(token: String?){
-        ConnectService.jwtLogin(token,_code, _loginMessage)
+    fun jwtLogin(token: String?, id: String?){
+        ConnectService.jwtLogin(token, id,_code, _loginMessage)
     }
 
     fun checkCode(): Int{

@@ -9,6 +9,7 @@ import android.util.Log
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.smilestone.smarket.LOGIN_ID
 import com.smilestone.smarket.home.HomeActivity
 import com.smilestone.smarket.LOGIN_TOKEN
 import com.smilestone.smarket.signup.SignupActivity
@@ -27,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
         val loginPreferences: SharedPreferences = getSharedPreferences(LOGIN_TOKEN, Context.MODE_PRIVATE)
         Log.d("토큰", loginPreferences.getString(LOGIN_TOKEN,"").toString())
         if(loginPreferences!=null && !loginPreferences.getString(LOGIN_TOKEN, "").equals("")){
-            model.jwtLogin(loginPreferences.getString(LOGIN_TOKEN,""))
+            model.jwtLogin(loginPreferences.getString(LOGIN_TOKEN,""), loginPreferences.getString(LOGIN_ID,""))
         }
 
         binding.btnSingup.setOnClickListener {
@@ -51,6 +52,7 @@ class LoginActivity : AppCompatActivity() {
             val result = model.checkCode()
             if(result == 1){
                 saveToken()
+                saveId()
                 val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -65,6 +67,12 @@ class LoginActivity : AppCompatActivity() {
     private fun saveToken() {
         with(getSharedPreferences(LOGIN_TOKEN, Context.MODE_PRIVATE).edit()){
             putString(LOGIN_TOKEN, model.loginMessage?.value?.tokens?.accessToken.toString())
+            apply()
+        }
+    }
+    private fun saveId(){
+        with(getSharedPreferences(LOGIN_TOKEN, Context.MODE_PRIVATE).edit()){
+            putString(LOGIN_ID, binding.editId.text.toString())
             apply()
         }
     }

@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.smilestone.smarket.CODE_FAIL
 import com.smilestone.smarket.dto.*
-import com.smilestone.smarket.item.ItemViewModel
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,7 +39,7 @@ object ConnectService {
     }
 
     //JWT 로그인 서비스
-    fun jwtLogin(token: String?, code: MutableLiveData<Int>, loginMessage: MutableLiveData<Login>) {
+    fun jwtLogin(token: String?, id: String?, code: MutableLiveData<Int>, loginMessage: MutableLiveData<Login>) {
         val jwtClient = OkHttpClient.Builder().addInterceptor(AuthInterceptor(token)).build()
         val retrofit: Retrofit by lazy {
             Retrofit.Builder().client(jwtClient)
@@ -48,7 +47,7 @@ object ConnectService {
                 .addConverterFactory(GsonConverterFactory.create()).build()
         }
         val jwtLoginService: LoginService = retrofit.create(LoginService::class.java)
-        jwtLoginService.requestJWTLogin(token ?: "")
+        jwtLoginService.requestJWTLogin(token ?: "", id ?: "")
             .enqueue(object : Callback<Login> {
                 override fun onResponse(call: Call<Login>, response: Response<Login>) {
                     loginMessage.value = response.body()

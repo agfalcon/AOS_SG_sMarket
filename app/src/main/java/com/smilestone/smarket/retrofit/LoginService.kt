@@ -14,6 +14,7 @@ interface LoginService {
 
     @GET("api/users/signin")
     fun requestJWTLogin(
-        @Header("Authorization") token: String
+        @Header("Authorization") token: String,
+        @Query("userId") id:String
     ) : Call<Login>
 }
