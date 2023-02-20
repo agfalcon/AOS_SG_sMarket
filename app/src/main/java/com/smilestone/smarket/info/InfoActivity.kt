@@ -6,10 +6,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
+import com.smilestone.smarket.LOGIN_TOKEN
 import com.smilestone.smarket.R
 import com.smilestone.smarket.chat.ChatActivity
 import com.smilestone.smarket.databinding.ActivityInfoBinding
 import com.smilestone.smarket.home.HomeActivity
+import com.smilestone.smarket.login.LoginActivity
 
 class InfoActivity : AppCompatActivity(), OnClickListener {
 
@@ -23,6 +25,9 @@ class InfoActivity : AppCompatActivity(), OnClickListener {
         binding.btnInfo.setOnClickListener(this)
         binding.btnChat.setOnClickListener(this)
 
+        binding.layerLogout.setOnClickListener {
+            logout()
+        }
 
     }
 
@@ -35,6 +40,15 @@ class InfoActivity : AppCompatActivity(), OnClickListener {
             else -> return
         }
         intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION)
+        startActivity(intent)
+    }
+
+    private fun logout(){
+        with(getSharedPreferences(LOGIN_TOKEN, MODE_PRIVATE).edit()){
+            clear()
+            commit()
+        }
+        val intent= Intent(this, LoginActivity::class.java)
         startActivity(intent)
     }
 }

@@ -186,27 +186,28 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent="0.102" />
 
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.helper.widget.Layer
         android:id="@+id/layer_purchase"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="image_case"
+        app:constraint_referenced_ids="image_case,text_purchase"
         tools:ignore="MissingConstraints" />
 
     <androidx.constraintlayout.helper.widget.Layer
         android:id="@+id/layer_sell"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="text_sell"
+        app:constraint_referenced_ids="image_sell,text_sell"
         tools:ignore="MissingConstraints" />
 
     <androidx.constraintlayout.helper.widget.Layer
         android:id="@+id/layer_logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="text_logout"
+        app:constraint_referenced_ids="image_logout,text_logout"
         tools:ignore="MissingConstraints" />
 
 
