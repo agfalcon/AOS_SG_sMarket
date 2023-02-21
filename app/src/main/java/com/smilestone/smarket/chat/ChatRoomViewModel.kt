@@ -16,12 +16,17 @@ import java.time.LocalDateTime
 
 class ChatRoomViewModel(application: Application) : AndroidViewModel(application) {
 
+    private val _list = ArrayList<Chat>()
     private val _chatList = MutableLiveData<ArrayList<Chat>>()
     private val _message = MutableLiveData<String>()
-    val url = "ws://3.34.86.115:8090/smilestone/chat/websocket" // 소켓에 연결하는 엔드포인트가 /socket일때 다음과 같음
-    private val stompClient: StompClient
+    private val _response = MutableLiveData<Int>()
+
+
     var roomNum : String
 
+
+    val response: LiveData<Int>
+        get() = _response
 
     val message : LiveData<String>
         get() = _message
@@ -31,16 +36,18 @@ class ChatRoomViewModel(application: Application) : AndroidViewModel(application
 
     init{
         _chatList.value = ArrayList<Chat>()
-        stompClient =  Stomp.over(Stomp.ConnectionProvider.OKHTTP, url)
         roomNum = ""
+        _response.value = 0
     }
 
+
     fun startChat(room: String){
-        StompService.runStomp(room, _chatList)
+        StompService.runStomp(room, _chatList, _list)
     }
 
     fun sendMessage(){
         if(!_message.value.isNullOrBlank()){
+            Log.d("테스트 스톰프2", _chatList.value.toString())
             StompService.sendMessage(_message.value!!)
         }
     }
