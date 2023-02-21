@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'com.google.gms.google-services'
+    //id 'com.google.gms.google-services'
 }
 
 android {
@@ -39,7 +39,7 @@ android {
 dependencies {
 
     implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
@@ -59,9 +59,9 @@ dependencies {
 
 
     //파이어베이스
-    implementation platform('com.google.firebase:firebase-bom:31.2.2')
+    //implementation platform('com.google.firebase:firebase-bom:31.2.2')
 
-    //채팅 관련 //stomp
+    //채팅 관련 - Stomp
     implementation 'com.squareup.okhttp3:okhttp:4.9.3'
     implementation 'com.github.NaikSoftware:StompProtocolAndroid:1.6.6'
 

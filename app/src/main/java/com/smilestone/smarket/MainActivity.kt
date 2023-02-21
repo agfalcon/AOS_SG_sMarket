@@ -3,6 +3,9 @@ package com.smilestone.smarket
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.smilestone.smarket.data.User
+import com.smilestone.smarket.dto.Chat
+import com.smilestone.smarket.stomp.StompService
 import org.json.JSONObject
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.dto.LifecycleEvent
@@ -22,8 +25,9 @@ class MainActivity : AppCompatActivity() {
 
     fun runStomp(){
 
-        stompClient.topic("/chat/${"0"}").subscribe { topicMessage ->
-            Log.d("날아오는것", topicMessage.payload)
+        stompClient.topic("/chat/${0}").subscribe { topicMessage ->
+            val json = JSONObject(topicMessage.payload)
+            Log.d("테스트 스톰프", json.toString())
         }
 
         stompClient.connect()
@@ -31,10 +35,10 @@ class MainActivity : AppCompatActivity() {
         stompClient.lifecycle().subscribe { lifecycleEvent ->
             when (lifecycleEvent.type) {
                 LifecycleEvent.Type.OPENED -> {
-                    Log.i("테스트", "open")
+                    StompService.stompClient.send("/pub/chat.${0}", "${User.nickname}님이 입장하셨습니다.").subscribe()
                 }
                 LifecycleEvent.Type.CLOSED -> {
-                    Log.i("테스트", "닫김")
+                    StompService.stompClient.send("/pub/chat.${0}", "${User.nickname}님이 퇴장하셨습니다.").subscribe()
 
                 }
                 LifecycleEvent.Type.ERROR -> {

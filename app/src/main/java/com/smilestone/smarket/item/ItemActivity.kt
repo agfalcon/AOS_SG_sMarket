@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.smilestone.smarket.PRODUCT_ID
+import com.smilestone.smarket.chat.ChatRoomActivity
 import com.smilestone.smarket.data.User
 import com.smilestone.smarket.databinding.ActivityItemBinding
 import com.smilestone.smarket.edit.EditActivity
@@ -68,6 +69,13 @@ class ItemActivity : AppCompatActivity() {
             intent.putExtra("isEdit", 1)
             intent.putExtra("productId", model.product.value?.productId)
             intent.putExtra("view", model.product.value?.view)
+            startActivity(intent)
+        }
+
+        binding.btnChat.setOnClickListener {
+            val intent = Intent(this, ChatRoomActivity::class.java)
+            intent.putExtra("roomTitle", model.product.value?.title)
+            intent.putExtra("productId", model.product.value?.productId)
             startActivity(intent)
         }
 
