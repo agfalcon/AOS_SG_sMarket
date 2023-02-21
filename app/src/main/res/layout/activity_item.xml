@@ -69,6 +69,7 @@
                     />
 
 
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -79,20 +80,47 @@
                 android:fontFamily="@font/notosanskr_bold"
                 android:textColor="@color/black"
                 android:layout_marginStart="15dp"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="미적분 문제 풀어드려요!!"
                 />
 
             <TextView
+                android:id="@+id/category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/time"
+                app:layout_constraintBottom_toBottomOf="@id/time"
+                android:text="수학"
+                android:textColor="@color/light_gray"
+                android:fontFamily="@font/notosanskr_bold"
+                android:textSize="12sp"
+                />
+
+            <TextView
+                android:id="@+id/space"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/category"
+                app:layout_constraintEnd_toStartOf="@id/time"
+                app:layout_constraintBottom_toBottomOf="@id/time"
+                android:text="·"
+                android:textColor="@color/light_gray"
+                android:fontFamily="@font/notosanskr_bold"
+                android:textSize="12sp"
+                android:layout_marginStart="7dp"
+                />
+
+            <TextView
                 android:id="@+id/time"
                 app:layout_constraintTop_toBottomOf="@id/title"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/space"
                 android:textSize="12sp"
                 android:fontFamily="@font/notosanskr_bold"
                 android:textColor="@color/light_gray"
-                android:layout_marginStart="15dp"
-                android:layout_width="match_parent"
+                android:layout_marginStart="7dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1분전"
                 />

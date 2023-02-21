@@ -27,12 +27,12 @@ class EditViewModel(application: Application) : AndroidViewModel(application) {
         _liveData.value = editData("" ,0,"")
     }
 
-    fun upload(){
-        ConnectService.upload(title=_liveData.value?.title?:"", content=_liveData.value?.content ?: "", price = _liveData.value?.price?: 0, code = _code)
+    fun upload(category: String){
+        ConnectService.upload(category = category, title=_liveData.value?.title?:"", content=_liveData.value?.content ?: "", price = _liveData.value?.price?: 0, code = _code)
     }
 
-    fun change(productId: Long, view: Long){
-        ConnectService.changeProduct(productId = productId, view = view ,sellerId = User.id!!, title=_liveData.value?.title?:"", content=_liveData.value?.content ?: "", price = _liveData.value?.price?: 0)
+    fun change(productId: Long, view: Long, category: String){
+        ConnectService.changeProduct(category = category, productId = productId, view = view ,sellerId = User.id!!, title=_liveData.value?.title?:"", content=_liveData.value?.content ?: "", price = _liveData.value?.price?: 0)
     }
 
     fun checkCode(): Int{

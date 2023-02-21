@@ -3,12 +3,14 @@ package com.smilestone.smarket.edit
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.smilestone.smarket.PRODUCT_ID
+import com.smilestone.smarket.R
 import com.smilestone.smarket.home.HomeActivity
 import com.smilestone.smarket.databinding.ActivityEditBinding
 import com.smilestone.smarket.item.ItemActivity
@@ -29,6 +31,9 @@ class EditActivity : AppCompatActivity() {
         model = ViewModelProvider(this)[EditViewModel::class.java]
 
 
+        binding.categoryList.adapter = ArrayAdapter.createFromResource(
+            this, R.array.category_item, android.R.layout.simple_list_item_1
+        )
 
         binding.btnExit.setOnClickListener{
             finish()
@@ -72,9 +77,9 @@ class EditActivity : AppCompatActivity() {
 
         binding.btnEdit.setOnClickListener {
             if(isEdit==0)
-                model.upload()
+                model.upload(binding.categoryList.selectedItem.toString())
             else{
-                model.change(productId, view)
+                model.change(productId, view, binding.categoryList.selectedItem.toString())
                 val intent = Intent(this, ItemActivity::class.java)
                 intent.putExtra(PRODUCT_ID, productId)
                 startActivity(intent)
@@ -83,4 +88,5 @@ class EditActivity : AppCompatActivity() {
         }
 
     }
+
 }

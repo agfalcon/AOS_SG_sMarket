@@ -208,9 +208,10 @@ object ConnectService {
         title: String = "",
         content: String = "",
         price: Long = 0,
+        category: String = "기타",
         code: MutableLiveData<Int>
     ){
-        val editData = EditData(User.id!!, title, content, price)
+        val editData = EditData(User.id!!, title, content, price, category)
         Log.d("테스트 아이디", User.id.toString())
         homeService.uploadProduct(User.token!!, editData)
             .enqueue(object : Callback<Product> {
@@ -267,8 +268,9 @@ object ConnectService {
                        title: String = "",
                        content: String = "",
                        price: Long = 0,
+                      category: String = "기타",
                         view: Long = 0){
-        val product = ChangeProduct(view = view, productId = productId, sellerId = sellerId, title = title, content = content, price= price, localDateTime = LocalDateTime.now().toString(), state = false )
+        val product = ChangeProduct(category = category, view = view, productId = productId, sellerId = sellerId, title = title, content = content, price= price, localDateTime = LocalDateTime.now().toString(), state = false )
         homeService.changeProduct(User.token!!, product)
             .enqueue(object : Callback<Long>{
                 override fun onResponse(call: Call<Long>, response: Response<Long>) {

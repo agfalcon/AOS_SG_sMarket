@@ -14,7 +14,7 @@ import com.smilestone.smarket.retrofit.ConnectService
 import com.smilestone.smarket.dto.Product
 
 class ItemViewModel(application: Application) : AndroidViewModel(application) {
-    data class itemData(var title: String, var time: String, var content: String, var view: Long, var price: Long)
+    data class itemData(var title: String, var time: String, var content: String, var view: Long, var price: Long, var category: String)
 
     private val _item = MutableLiveData<itemData>()
     private val _product = MutableLiveData<Product>()
@@ -38,7 +38,7 @@ class ItemViewModel(application: Application) : AndroidViewModel(application) {
         get() = _product
 
     init{
-        _item.value = itemData("","","",0, 0)
+        _item.value = itemData("","","",0, 0, "기타")
     }
 
     fun item(productId: Long){
@@ -80,5 +80,6 @@ class ItemViewModel(application: Application) : AndroidViewModel(application) {
         _item.value?.content = _product.value?.content ?: ""
         _item.value?.view = _product.value?.view ?: 0
         _item.value?.price = _product.value?.price ?: 0
+        _item.value?.category = _product.value?.category ?: "기타"
     }
 }

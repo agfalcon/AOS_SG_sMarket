@@ -44,6 +44,7 @@ class ItemActivity : AppCompatActivity() {
                 binding.time.text = convertLocalDateTimeToTime(time)
                 binding.content.text = model.item.value?.content
                 binding.textPrice.text = priceFormat.format(model.item.value?.price) + "원"
+                binding.category.text = model.item.value?.category
                 model.getUser()
 
                 if(model.product.value?.sellerId == User.id){

@@ -18,6 +18,9 @@ data class ChangeProduct(
     @SerializedName("price")
     val price: Long,
 
+    @SerializedName("category")
+    val category: String,
+
     @SerializedName("state")
     val state: Boolean,
 

@@ -9,5 +9,8 @@ data class EditData(
     val title: String,
     @SerializedName("content")
     val content: String,
-    @SerializedName("price") val price: Long
+    @SerializedName("price")
+    val price: Long,
+    @SerializedName("category")
+    val category: String
 )
