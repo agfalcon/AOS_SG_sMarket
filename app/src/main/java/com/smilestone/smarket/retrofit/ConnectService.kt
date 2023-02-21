@@ -305,7 +305,7 @@ object ConnectService {
         userService.getUser(User.token!!, id)
             .enqueue(object : Callback<UserData>{
                 override fun onResponse(call: Call<UserData>, response: Response<UserData>) {
-                    nickname.value = response.body()?.nickName ?: ""
+                    nickname.value = response.body()?.nickName ?: "익명"
                     Log.d("테스트 유저", id.toString())
                     Log.d("테스트 유저 ", response.code().toString())
                 }
