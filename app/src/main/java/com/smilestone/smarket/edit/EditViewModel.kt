@@ -28,7 +28,11 @@ class EditViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun upload(){
-        ConnectService.upload(User.id!!, title=_liveData.value?.title?:"", content=_liveData.value?.content ?: "", price = _liveData.value?.price?: 0, code = _code)
+        ConnectService.upload(title=_liveData.value?.title?:"", content=_liveData.value?.content ?: "", price = _liveData.value?.price?: 0, code = _code)
+    }
+
+    fun change(productId: Long, view: Long){
+        ConnectService.changeProduct(productId = productId, view = view ,sellerId = User.id!!, title=_liveData.value?.title?:"", content=_liveData.value?.content ?: "", price = _liveData.value?.price?: 0)
     }
 
     fun checkCode(): Int{

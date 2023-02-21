@@ -25,13 +25,12 @@ class EditActivity : AppCompatActivity() {
 
         model = ViewModelProvider(this)[EditViewModel::class.java]
 
+
+
         binding.btnExit.setOnClickListener{
             finish()
         }
 
-        binding.btnEdit.setOnClickListener {
-            model.upload()
-        }
 
         model.code.observe(this, Observer {
             val result = model.checkCode()
@@ -59,6 +58,22 @@ class EditActivity : AppCompatActivity() {
         binding.editContent.doAfterTextChanged {
             model.liveData.value?.content = binding.editContent.text.toString()
 
+        }
+
+        binding.editTitle.setText(intent.getStringExtra("title"))
+        binding.editPrice.setText(intent.getStringExtra("price"))
+        binding.editContent.setText(intent.getStringExtra("content"))
+        val productId = intent.getLongExtra("productId", 0)
+        val isEdit = intent.getIntExtra("isEdit", 0)
+        val view = intent.getLongExtra("view", 0)
+
+        binding.btnEdit.setOnClickListener {
+            if(isEdit==0)
+                model.upload()
+            else{
+                model.change(productId, view)
+                finish()
+            }
         }
 
     }

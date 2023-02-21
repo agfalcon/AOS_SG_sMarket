@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import com.smilestone.smarket.CODE_FAIL
 import com.smilestone.smarket.retrofit.ConnectService
 import com.smilestone.smarket.STATUS_OK
+import com.smilestone.smarket.data.User
 import com.smilestone.smarket.dto.Product
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
@@ -42,7 +43,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
 
     fun saveUser(){
-        ConnectService.getUser(_response)
+        ConnectService.getUser(_response, User.id!!)
     }
     fun homeService(){
         ConnectService.home(_code, _post)

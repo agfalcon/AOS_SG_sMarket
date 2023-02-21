@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.smilestone.smarket.CODE_FAIL
 import com.smilestone.smarket.data.User
+import com.smilestone.smarket.data.User.id
 import com.smilestone.smarket.data.User.nickname
 import com.smilestone.smarket.dto.*
 import com.smilestone.smarket.signup.SignUpViewModel
@@ -13,6 +14,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.time.LocalDateTime
 
 object ConnectService {
     var signUpData: SignUp? = null
@@ -204,13 +206,13 @@ object ConnectService {
 
     //글 올리기 서비스
     fun upload(
-        sellerId: Long = 0,
         title: String = "",
         content: String = "",
         price: Long = 0,
         code: MutableLiveData<Int>
     ){
-        val editData = EditData(sellerId, title, content, price)
+        val editData = EditData(User.id!!, title, content, price)
+        Log.d("테스트 아이디", User.id.toString())
         homeService.uploadProduct(User.token!!, editData)
             .enqueue(object : Callback<Product> {
                 override fun onResponse(call: Call<Product>, response: Response<Product>) {
@@ -229,11 +231,12 @@ object ConnectService {
 
     //글 보기 서비스
     fun item(id: Long, code: MutableLiveData<Int>, product: MutableLiveData<Product>) {
-        homeService.getItem(User.token!!, id.toLong()).enqueue(
+        homeService.getItem(User.token!!, id).enqueue(
             object : Callback<Product> {
                 override fun onResponse(call: Call<Product>, response: Response<Product>) {
                     code.value = response.code()
                     product.value = response.body()
+                    Log.d("테스트 아이템", response.body().toString())
                 }
 
                 override fun onFailure(call: Call<Product>, t: Throwable) {
@@ -244,9 +247,45 @@ object ConnectService {
         )
     }
 
+    //글 삭제 서비스
+    fun deleteProduct(productId: Long, code:MutableLiveData<Int>){
+        homeService.deleteProduct(User.token!!, productId)
+            .enqueue(object : Callback<Long>{
+                override fun onResponse(call: Call<Long>, response: Response<Long>) {
+                    Log.d("글 삭제" , "글 삭제 완료")
+                }
+
+                override fun onFailure(call: Call<Long>, t: Throwable) {
+                    Log.d("글 삭제" , t.message.toString())
+                }
+
+            })
+    }
+
+    //글 수정 서비스
+    fun changeProduct(productId: Long = 0,
+                      sellerId: Long = 0,
+                       title: String = "",
+                       content: String = "",
+                       price: Long = 0,
+                        view: Long = 0){
+        val product = ChangeProduct(view = view, productId = productId, sellerId = sellerId, title = title, content = content, price= price, localDateTime = LocalDateTime.now().toString(), state = false )
+        homeService.changeProduct(User.token!!, product)
+            .enqueue(object : Callback<Long>{
+                override fun onResponse(call: Call<Long>, response: Response<Long>) {
+                    Log.d("글 수정" , "글 수정 완료")
+                }
+
+                override fun onFailure(call: Call<Long>, t: Throwable) {
+                    Log.d("글 수정" , t.message.toString())
+                }
+
+            })
+    }
+
     //유저 정보 받아오기
-    fun getUser(result: MutableLiveData<Boolean>){
-        userService.getUser(User.token!!, User.id!!)
+    fun getUser(result: MutableLiveData<Boolean>, id: Long){
+        userService.getUser(User.token!!, id)
             .enqueue(object : Callback<UserData>{
                 override fun onResponse(call: Call<UserData>, response: Response<UserData>) {
                     User.nickname = response.body()?.nickName ?: ""
@@ -258,6 +297,22 @@ object ConnectService {
                     Log.d("유저", t.message.toString())
                 }
 
+            })
+    }
+
+    //판매자 정보 받아오기
+    fun getSellerUser(id: Long, nickname: MutableLiveData<String>){
+        userService.getUser(User.token!!, id)
+            .enqueue(object : Callback<UserData>{
+                override fun onResponse(call: Call<UserData>, response: Response<UserData>) {
+                    nickname.value = response.body()?.nickName ?: ""
+                    Log.d("테스트 유저", id.toString())
+                    Log.d("테스트 유저 ", response.code().toString())
+                }
+
+                override fun onFailure(call: Call<UserData>, t: Throwable) {
+                    Log.d("테스트 유저", t.message.toString())
+                }
             })
     }
 
@@ -284,6 +339,7 @@ object ConnectService {
             .enqueue(object : Callback<UserData>{
                 override fun onResponse(call: Call<UserData>, response: Response<UserData>) {
                     code.value = response.code()
+                    Log.d("테스트 비밀번호", response.code().toString())
                 }
 
                 override fun onFailure(call: Call<UserData>, t: Throwable) {
