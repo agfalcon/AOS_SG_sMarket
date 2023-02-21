@@ -284,6 +284,28 @@ object ConnectService {
             })
     }
 
+    //카테고리 검색 서비스
+    fun getProduct(category: String?, code: MutableLiveData<Int>, product: MutableLiveData<ArrayList<Product>>){
+        if(category==null)
+            return
+        homeService.getProduct(User.token!!, category)
+            .enqueue(object : Callback<ArrayList<Product>>{
+                override fun onResponse(
+                    call: Call<ArrayList<Product>>,
+                    response: Response<ArrayList<Product>>
+                ) {
+                    code.value = response.code()
+                    product.value = response.body()
+                }
+
+                override fun onFailure(call: Call<ArrayList<Product>>, t: Throwable) {
+                    code.value = CODE_FAIL
+                    Log.d("카테고리 검색", t.message.toString())
+                }
+
+            })
+    }
+
     //유저 정보 받아오기
     fun getUser(result: MutableLiveData<Boolean>, id: Long){
         userService.getUser(User.token!!, id)

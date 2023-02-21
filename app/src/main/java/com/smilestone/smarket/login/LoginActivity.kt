@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.smilestone.smarket.LOGIN_ID
 import com.smilestone.smarket.home.HomeActivity
 import com.smilestone.smarket.LOGIN_TOKEN
-import com.smilestone.smarket.MainActivity
 import com.smilestone.smarket.data.User
 import com.smilestone.smarket.signup.SignupActivity
 import com.smilestone.smarket.databinding.ActivityLoginBinding
@@ -57,10 +56,6 @@ class LoginActivity : AppCompatActivity() {
             model.loginData.value?.pw = binding.editPw.text.toString()
         }
 
-        binding.btnSample.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
 
         model.code.observe(this, Observer {
             val result = model.checkCode()

@@ -17,6 +17,7 @@ import com.smilestone.smarket.item.ItemActivity
 import com.smilestone.smarket.search.SearchActivity
 import com.smilestone.smarket.databinding.ActivityHomeBinding
 import com.smilestone.smarket.info.InfoActivity
+import com.smilestone.smarket.search.CategoryActivity
 
 class HomeActivity : AppCompatActivity(), OnClickListener {
 
@@ -62,6 +63,7 @@ class HomeActivity : AppCompatActivity(), OnClickListener {
         binding.btnEdit.setOnClickListener (this)
         binding.btnChat.setOnClickListener (this)
         binding.btnInfo.setOnClickListener(this)
+        binding.searchCategory.setOnClickListener(this)
 
 
 
@@ -94,6 +96,7 @@ class HomeActivity : AppCompatActivity(), OnClickListener {
             binding.btnChat.id -> Intent(applicationContext, ChatActivity::class.java)
             binding.btnEdit.id -> Intent(applicationContext, EditActivity::class.java)
             binding.btnInfo.id -> Intent(applicationContext, InfoActivity::class.java)
+            binding.searchCategory.id -> Intent(applicationContext, CategoryActivity::class.java)
             else -> return
         }
         intent.addFlags (Intent.FLAG_ACTIVITY_NO_ANIMATION)

@@ -56,4 +56,10 @@ interface ProductService {
         @Header("Authorization") token: String,
         @Body() product : ChangeProduct
     ): Call<Long>
+
+    @GET("/api/product/category")
+    fun getProduct(
+        @Header("Authorization") token:String,
+        @Query("category") category: String
+    ) : Call<ArrayList<Product>>
 }
