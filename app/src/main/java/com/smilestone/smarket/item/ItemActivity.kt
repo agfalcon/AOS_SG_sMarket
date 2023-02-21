@@ -29,6 +29,8 @@ class ItemActivity : AppCompatActivity() {
 
 
         model = ViewModelProvider(this)[ItemViewModel::class.java]
+        val productId = intent.getLongExtra(PRODUCT_ID, 0)
+        model.item(productId)
 
 
         model.code.observe(this, Observer{
@@ -70,6 +72,7 @@ class ItemActivity : AppCompatActivity() {
             intent.putExtra("productId", model.product.value?.productId)
             intent.putExtra("view", model.product.value?.view)
             startActivity(intent)
+            finish()
         }
 
         binding.btnChat.setOnClickListener {
@@ -81,9 +84,4 @@ class ItemActivity : AppCompatActivity() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        val productId = intent.getLongExtra(PRODUCT_ID, 0)
-        model.item(productId)
-    }
 }

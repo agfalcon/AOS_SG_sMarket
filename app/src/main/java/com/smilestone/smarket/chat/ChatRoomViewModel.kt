@@ -8,6 +8,8 @@ import androidx.lifecycle.MutableLiveData
 import com.smilestone.smarket.data.User
 import com.smilestone.smarket.dto.Chat
 import com.smilestone.smarket.stomp.StompService
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.StompClient
@@ -50,6 +52,10 @@ class ChatRoomViewModel(application: Application) : AndroidViewModel(application
             Log.d("테스트 스톰프2", _chatList.value.toString())
             StompService.sendMessage(_message.value!!)
         }
+    }
+
+    fun exit(){
+        StompService.sendMessage("${User.nickname}님이 퇴장하셨습니다.t529tZ")
     }
 
     fun setMessage(message:String){

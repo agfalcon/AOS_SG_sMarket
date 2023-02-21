@@ -4,11 +4,14 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.smilestone.smarket.PRODUCT_ID
 import com.smilestone.smarket.home.HomeActivity
 import com.smilestone.smarket.databinding.ActivityEditBinding
+import com.smilestone.smarket.item.ItemActivity
 import java.text.DecimalFormat
 
 class EditActivity : AppCompatActivity() {
@@ -72,6 +75,9 @@ class EditActivity : AppCompatActivity() {
                 model.upload()
             else{
                 model.change(productId, view)
+                val intent = Intent(this, ItemActivity::class.java)
+                intent.putExtra(PRODUCT_ID, productId)
+                startActivity(intent)
                 finish()
             }
         }

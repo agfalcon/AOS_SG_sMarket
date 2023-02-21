@@ -2,6 +2,10 @@ package com.smilestone.smarket.chat
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +14,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat.setBackground
 import androidx.recyclerview.widget.RecyclerView
 import com.smilestone.smarket.PRODUCT_ID
 import com.smilestone.smarket.R
@@ -20,7 +25,7 @@ import com.smilestone.smarket.item.ItemActivity
 
 class ChatRoomAdapter(private val model: ChatRoomViewModel, private val context: Context): RecyclerView.Adapter<ChatRoomAdapter.ViewHolder>() {
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        //val inout: TextView = view.findViewById<TextView>(R.id.message_inout)
+        val inout: TextView = view.findViewById<TextView>(R.id.message_inout)
         val linear: LinearLayout = view.findViewById<LinearLayout>(R.id.linear)
         val nickname: TextView = view.findViewById<TextView>(R.id.message_nickname)
         val background: ImageView = view.findViewById<ImageView>(R.id.message_background)
@@ -34,17 +39,33 @@ class ChatRoomAdapter(private val model: ChatRoomViewModel, private val context:
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val message = model.chatList.value?.get(position)
-        if(!message?.sender.equals(User.nickname)){
-            holder.nickname.text = message?.sender
-            holder.background.setImageResource(R.drawable.partner_chat)
+        if(message?.message?.length ?: 0 > 6 && message?.message?.substring(message.message.length-6).equals("t529tZ")){
+            holder.inout.text = message?.message?.substring(0, message?.message?.length!! -6)
+            holder.nickname.visibility = View.GONE
+            holder.background.visibility = View.GONE
+            holder.message.visibility = View.GONE
         }
         else{
-            holder.nickname.visibility = View.GONE
-            holder.background.setImageResource(R.drawable.my_chat)
-            holder.linear.gravity = Gravity.END
+            holder.inout.visibility = View.GONE
+            if(!message?.sender.equals(User.nickname)){
+                holder.nickname.text = message?.sender
+                holder.nickname.visibility = View.VISIBLE
+                holder.background.visibility = View.VISIBLE
+                holder.message.visibility = View.VISIBLE
+                val icon = BitmapFactory.decodeResource(context.getResources(), R.drawable.partner_chat);
+                holder.background.setBackground(BitmapDrawable(icon));
+            }
+            else{
+                holder.nickname.visibility = View.GONE
+                holder.background.setImageResource(R.drawable.my_chat)
+                holder.linear.gravity = Gravity.END
+                holder.background.visibility = View.VISIBLE
+                holder.message.visibility = View.VISIBLE
+                val icon = BitmapFactory.decodeResource(context.getResources(), R.drawable.my_chat);
+                holder.background.setBackground(BitmapDrawable(icon));
+            }
+            holder.message.text = message?.message
         }
-        holder.message.text = message?.message
-
     }
 
     override fun getItemCount(): Int = model.chatList.value?.size ?: 0

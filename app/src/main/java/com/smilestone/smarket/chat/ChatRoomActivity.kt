@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.smilestone.smarket.R
+import com.smilestone.smarket.data.User
 import com.smilestone.smarket.databinding.ActivityChatRoomBinding
 import com.smilestone.smarket.dto.Chat
 import java.util.*
@@ -46,8 +47,8 @@ class ChatRoomActivity : AppCompatActivity() {
         }
 
 
-        model.chatList.observe(this, Observer<ArrayList<Chat>> {
-            Log.d("테스트 스톰프1", model.chatList.value.toString())
+        model.chatList.observe(this, Observer {
+            Log.d("테스트 스톰프20", model.chatList.value.toString())
             chatAdapter.notifyDataSetChanged()
         })
 
@@ -61,6 +62,7 @@ class ChatRoomActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
+        model.exit()
         model.disconnect()
     }
 }

@@ -1,6 +1,5 @@
 package com.smilestone.smarket.stomp
 
-import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.smilestone.smarket.data.User
@@ -26,9 +25,10 @@ object StompService {
             val chat: Chat = Chat(json.getString("roomId"), json.getString("sender"), json.getString("message"), json.getString("chatAt"))
             try{
                 list.add(chat)
-                chatList.setValue(list)
+                chatList.postValue(list)
             }
             catch(e: Exception){
+                //chatList.value?.add(chat)
             }
             Log.d("테스트 스톰프", chatList.value.toString())
 
@@ -55,14 +55,14 @@ object StompService {
             }
         }
 
-//        val data = JSONObject()
-//        data.put("roomId", roomNum)
-//        data.put("sender", User.nickname)
-//        data.put("message", "${User.nickname}님이 입장하셨습니다.")
-//        data.put("chatAt", LocalDateTime.now().toString())
-//
-//        stompClient.send("/pub/chat.${roomNum}", data.toString()).subscribe()
-    }
+        val data = JSONObject()
+        data.put("roomId", roomNum)
+        data.put("sender", User.nickname)
+        data.put("message", "${User.nickname}님이 입장하셨습니다.t529tZ")
+        data.put("chatAt", LocalDateTime.now().toString())
+
+        stompClient.send("/pub/chat.${roomNum}", data.toString()).subscribe()
+  }
 
     fun sendMessage(message: String){
         val data = JSONObject()

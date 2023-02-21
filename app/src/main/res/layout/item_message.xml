@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_marginBottom="6dp"
+    >
 
     <TextView
         android:id="@+id/message_inout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="김근범님이 입장하셨습니다."
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +24,6 @@
         app:layout_constraintTop_toBottomOf="@id/message_inout"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="12dp"
-        android:text="닉네임"
         android:textSize="16sp"
         android:textColor="@color/black"
         />
@@ -32,11 +34,10 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/message_nickname"
         app:layout_constraintTop_toBottomOf="@id/message_nickname"
-        android:gravity="end"
         android:layout_marginHorizontal="12dp"
         >
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             >
 
@@ -44,27 +45,28 @@
                 android:id="@+id/message_background"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="@drawable/partner_chat"
                 app:layout_constraintStart_toStartOf="@id/message_content"
                 app:layout_constraintTop_toTopOf="@id/message_content"
                 app:layout_constraintEnd_toEndOf="@id/message_content"
                 app:layout_constraintBottom_toBottomOf="@id/message_content"
                 />
+
             <TextView
                 android:id="@+id/message_content"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="ffafasfsdaffffffffffffffffffffffffffffff"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text= "에시로 이렇게 한번 해볼텐데요. 자 이제 해볼게요"
-                android:padding="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:textColor="@color/black"
-                android:fontFamily="@font/notosanskr_medium"
+                android:maxWidth="200dp"
+                android:gravity="start"
+                android:paddingVertical="6dp"
+                android:paddingHorizontal="12dp"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
