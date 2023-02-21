@@ -44,7 +44,6 @@ class ItemActivity : AppCompatActivity() {
                 model.getUser()
 
                 if(model.product.value?.sellerId == User.id){
-                    binding.btnChat.visibility = View.INVISIBLE
                     binding.btnChange.visibility = View.VISIBLE
                     binding.btnDelete.visibility = View.VISIBLE
                 }
