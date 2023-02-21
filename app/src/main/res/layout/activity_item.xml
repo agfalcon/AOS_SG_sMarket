@@ -49,8 +49,8 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:src="@drawable/ic_baseline_person_24"
-                    app:civ_circle_background_color="@color/main_color"
+                    android:src="@drawable/person"
+                    app:civ_circle_background_color="@color/message_box"
                     android:layout_marginStart="15dp"
                     />
 
@@ -61,26 +61,13 @@
                     app:layout_constraintStart_toEndOf="@id/user_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginStart="12dp"
                     android:text="WWIT"
                     android:textSize="18sp"
                     android:fontFamily="@font/notosanskr_bold"
                     android:textColor="@color/black"
                     />
 
-                <TextView
-                    android:id="@+id/view"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/notosanskr_light"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:text="조회 1"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginBottom="12dp"
-                    />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

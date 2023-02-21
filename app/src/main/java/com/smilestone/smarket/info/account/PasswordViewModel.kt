@@ -48,7 +48,7 @@ class PasswordViewModel(application: Application) : AndroidViewModel(application
                 Toast.makeText(getApplication(), "서버 오류", Toast.LENGTH_SHORT).show()
                 -1
             }
-            STATUS_OK ->{
+            STATUS_OK, 1001 ->{
                 1
             }
             else -> {

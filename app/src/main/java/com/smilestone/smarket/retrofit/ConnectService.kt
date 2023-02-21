@@ -9,11 +9,10 @@ import com.smilestone.smarket.data.User.nickname
 import com.smilestone.smarket.dto.*
 import com.smilestone.smarket.signup.SignUpViewModel
 import okhttp3.OkHttpClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
+import okhttp3.ResponseBody
+import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
+import java.lang.reflect.Type
 import java.time.LocalDateTime
 
 object ConnectService {
@@ -34,7 +33,7 @@ object ConnectService {
         Log.d("테스트 토큰", token)
         val jwtClient = OkHttpClient.Builder().addInterceptor(AuthInterceptor(token)).build()
         retrofitToken = Retrofit.Builder().client(jwtClient)
-                .baseUrl("http://52.78.175.29:8088")
+                .baseUrl("http://52.78.175.29:8088").addConverterFactory(nullOnEmptyConverterFactory)
                 .addConverterFactory(GsonConverterFactory.create()).build()
         homeService = retrofitToken!!.create(ProductService::class.java)
         userService = retrofitToken!!.create(UserService::class.java)
@@ -336,13 +335,13 @@ object ConnectService {
     //비밀번호 변경
     fun changePassword(password: String, newPassword: String,  code: MutableLiveData<Int>){
         userService.changePassword(User.token!!, User.id!!, password, newPassword)
-            .enqueue(object : Callback<UserData>{
-                override fun onResponse(call: Call<UserData>, response: Response<UserData>) {
+            .enqueue(object : Callback<Long>{
+                override fun onResponse(call: Call<Long>, response: Response<Long>) {
                     code.value = response.code()
                     Log.d("테스트 비밀번호", response.code().toString())
                 }
 
-                override fun onFailure(call: Call<UserData>, t: Throwable) {
+                override fun onFailure(call: Call<Long>, t: Throwable) {
                     code.value = CODE_FAIL
                     Log.d("비밀번호 변경", t.message.toString())
                 }
@@ -350,4 +349,21 @@ object ConnectService {
             })
     }
 
+}
+
+private val nullOnEmptyConverterFactory = object : Converter.Factory() {
+    fun converterFactory() = this
+    override fun responseBodyConverter(type: Type, annotations: Array<out Annotation>, retrofit: Retrofit) = object : Converter<ResponseBody, Any?> {
+        val nextResponseBodyConverter = retrofit.nextResponseBodyConverter<Any?>(converterFactory(), type, annotations)
+        override fun convert(value: ResponseBody) = if (value.contentLength() != 0L) {
+            try{
+                nextResponseBodyConverter.convert(value)
+            }catch (e:Exception){
+                e.printStackTrace()
+                null
+            }
+        } else{
+            null
+        }
+    }
 }

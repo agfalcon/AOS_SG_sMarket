@@ -14,6 +14,9 @@ import com.smilestone.smarket.data.User
 import com.smilestone.smarket.databinding.ActivityItemBinding
 import com.smilestone.smarket.edit.EditActivity
 import java.text.DecimalFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 
 class ItemActivity : AppCompatActivity() {
 
@@ -37,8 +40,8 @@ class ItemActivity : AppCompatActivity() {
             model.product.observe(this, Observer{
                 model.checkCode()
                 binding.title.text = model.item.value?.title
-                binding.time.text = model.item.value?.time
-                binding.view.text = model.item.value?.view.toString()
+                val time = LocalDateTime.parse(model.item.value?.time)
+                binding.time.text = convertLocalDateTimeToTime(time)
                 binding.content.text = model.item.value?.content
                 binding.textPrice.text = priceFormat.format(model.item.value?.price) + "원"
                 model.getUser()
@@ -81,6 +84,33 @@ class ItemActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+    }
+
+    fun convertLocalDateTimeToTime(localDateTime: LocalDateTime): String? {
+        val now: LocalDateTime = LocalDateTime.now()
+        var diffTime: Long = localDateTime.until(now, ChronoUnit.SECONDS) - 60*60*9 // now보다 이후면 +, 전이면 -
+        Log.d("테스트 시간", diffTime.toString())
+        val msg: String? = null
+        if (diffTime < 60) {
+            return diffTime.toString() + "초전"
+        }
+        diffTime = diffTime / 60
+        if (diffTime < 60) {
+            return diffTime.toString() + "분 전"
+        }
+        diffTime = diffTime / 60
+        if (diffTime < 24) {
+            return diffTime.toString() + "시간 전"
+        }
+        diffTime = diffTime / 24
+        if (diffTime < 28) {
+            return diffTime.toString() + "일 전"
+        }
+        diffTime = diffTime / 28
+        if (diffTime < 12) {
+            return diffTime.toString() + "개월 전"
+        }
+        return  diffTime.toString()
     }
 
 }

@@ -26,5 +26,5 @@ interface UserService {
         @Field("id") id: Long,
         @Field("password") password: String,
         @Field("newPassword") newPassword: String
-    ): Call<UserData>
+    ): Call<Long>
 }

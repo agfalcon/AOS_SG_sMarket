@@ -13,8 +13,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/ic_baseline_person_24"
-        app:civ_circle_background_color="@color/main_color"
+        android:src="@drawable/person"
+        app:civ_circle_background_color="@color/search_box"
         />
 
     <TextView
@@ -23,7 +23,11 @@
         app:layout_constraintStart_toEndOf="@id/user_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:textSize="13sp"
+        android:textColor="@color/black"
+        android:layout_marginStart="8dp"
+        android:textStyle="bold"
+        android:layout_marginTop="3dp"
         />
 
     <TextView
@@ -32,7 +36,9 @@
         app:layout_constraintStart_toEndOf="@id/user_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:textSize="10sp"
+        android:textColor="#999999"
+        android:layout_marginStart="8dp"
         />
 
     <TextView
@@ -41,7 +47,10 @@
         app:layout_constraintStart_toEndOf="@id/user_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:textColor="@color/black"
+        android:textSize="10sp"
+        android:layout_marginStart="8dp"
+
         />
     
 
