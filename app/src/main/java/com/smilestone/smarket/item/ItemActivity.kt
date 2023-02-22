@@ -13,6 +13,7 @@ import com.smilestone.smarket.chat.ChatRoomActivity
 import com.smilestone.smarket.data.User
 import com.smilestone.smarket.databinding.ActivityItemBinding
 import com.smilestone.smarket.edit.EditActivity
+import com.smilestone.smarket.room.ChatRoomDatabase
 import java.text.DecimalFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter

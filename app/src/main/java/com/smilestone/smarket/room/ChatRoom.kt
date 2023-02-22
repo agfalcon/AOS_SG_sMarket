@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 @Entity
 data class ChatRoom(
     @PrimaryKey
-    val roomId: Long,
-    val title: String,
-    val lastChat: String,
-    val lastChatAt: String
+    var roomId: Long,
+    var title: String,
+    var lastChat: String,
+    var lastChatAt: String
 )

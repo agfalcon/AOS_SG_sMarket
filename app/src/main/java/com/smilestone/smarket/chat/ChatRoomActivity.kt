@@ -12,6 +12,8 @@ import com.smilestone.smarket.R
 import com.smilestone.smarket.data.User
 import com.smilestone.smarket.databinding.ActivityChatRoomBinding
 import com.smilestone.smarket.dto.Chat
+import com.smilestone.smarket.room.ChatRoom
+import com.smilestone.smarket.room.ChatRoomDatabase
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -20,6 +22,7 @@ class ChatRoomActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChatRoomBinding
     private lateinit var model: ChatRoomViewModel
     private lateinit var chatAdapter: ChatRoomAdapter
+    private lateinit var db: ChatRoomDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,11 +61,19 @@ class ChatRoomActivity : AppCompatActivity() {
             setHasFixedSize(true)
             adapter = chatAdapter
         }
+
+        //database
+        db = ChatRoomDatabase.getInstance(this)!!
     }
 
     override fun onStop() {
         super.onStop()
         model.exit()
         model.disconnect()
+    }
+
+    private fun addChatRoom(roomNum: Long){
+        val chatRoom: ChatRoom = ChatRoom(roomNum, binding.nickname.text.toString(), "","")
+        db.getChatRoomDao().insert(chatRoom)
     }
 }

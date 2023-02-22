@@ -20,4 +20,7 @@ interface ChatRoomDao {
 
     @Query("SELECT * FROM ChatRoom")
     fun getChatRoomList() : ArrayList<ChatRoom>
+
+    @Query("SELECT * FROM ChatRoom WHERE roomId= :room ")
+    fun findRoomId(room: Long) :  ArrayList<ChatRoom>
 }
